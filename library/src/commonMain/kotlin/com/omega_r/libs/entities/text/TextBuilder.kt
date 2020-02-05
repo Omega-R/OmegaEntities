@@ -1,4 +1,4 @@
-package com.omega_r.libs.entities.texts
+package com.omega_r.libs.entities.text
 
 private const val DEFAULT_CAPACITY = 10
 
@@ -6,13 +6,13 @@ class TextBuilder(capacity: Int) {
 
     private val list: MutableList<Text> = ArrayList(capacity)
 
-    constructor(): this(DEFAULT_CAPACITY)
+    constructor() : this(DEFAULT_CAPACITY)
 
-    constructor(list: List<Text>): this(list.size + DEFAULT_CAPACITY) {
+    constructor(list: List<Text>) : this(list.size + DEFAULT_CAPACITY) {
         this.list.addAll(list)
     }
 
-    constructor(vararg text: Text): this(text.size + DEFAULT_CAPACITY) {
+    constructor(vararg text: Text) : this(text.size + DEFAULT_CAPACITY) {
         list.addAll(text)
     }
 
@@ -21,13 +21,21 @@ class TextBuilder(capacity: Int) {
         return this
     }
 
-    fun append(value: String) = append(Text.from(value))
+    fun append(value: String) = append(
+        Text.from(
+            value
+        )
+    )
 
-    fun append(stringHolder: StringHolder) = append(Text.from(stringHolder))
+    fun append(stringHolder: StringHolder) = append(
+        Text.from(stringHolder)
+    )
 
-    fun append(value: TextHolder) = append(value.getText())
+    fun append(textHolder: TextHolder) = append(textHolder.text)
 
-    fun append(vararg texts: Text) = append(Text.from(*texts))
+    fun append(vararg texts: Text) = append(
+        Text.from(*texts)
+    )
 
     fun insert(text: Text, index: Int): TextBuilder {
         list.add(index, text)
@@ -40,9 +48,12 @@ class TextBuilder(capacity: Int) {
 
     class BuilderText(private val builder: TextBuilder) : Text {
 
-        constructor(text: Text): this(TextBuilder(text))
+        constructor(text: Text) : this(TextBuilder(text))
 
-        constructor(): this(TextBuilder())
+        constructor() : this(TextBuilder())
+
+        override val text: Text
+            get() = builder.build()
 
         override val isEmpty: Boolean
             get() {
@@ -68,8 +79,6 @@ class TextBuilder(capacity: Int) {
             builder.append(string)
             return this
         }
-
-        override fun getText(): Text = builder.build()
 
     }
 

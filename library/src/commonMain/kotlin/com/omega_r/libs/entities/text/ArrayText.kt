@@ -1,6 +1,7 @@
-package com.omega_r.libs.entities.texts
+package com.omega_r.libs.entities.text
 
-internal data class ArrayText internal constructor(private val list: List<Text>) : Text {
+internal data class ArrayText internal constructor(private val list: List<Text>) :
+    Text {
 
     internal constructor(vararg text: Text): this(text.toList())
 
