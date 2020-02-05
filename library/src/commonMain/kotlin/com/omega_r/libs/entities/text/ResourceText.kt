@@ -1,12 +1,19 @@
 package com.omega_r.libs.entities.text
 
-@Suppress("NO_ACTUAL_FOR_EXPECT")
-expect class Resource<T>(some: T) {
-    val id: T
-    fun isEmpty(): Boolean
+import com.omega_r.libs.entities.Identifiable
+
+abstract class Resource<T> : Identifiable<T> {
+    abstract fun isEmpty(): Boolean
 }
 
-@Suppress("NO_ACTUAL_FOR_EXPECT")
-expect class ResourceText(resource: Resource<*>) : Text {
-    override val isEmpty: Boolean
+class IntResource(override val id: Int) : Resource<Int>() {
+    override fun isEmpty(): Boolean = id <= 0
+}
+
+class StringNamedResource(override val id: String) : Resource<String>() {
+    override fun isEmpty(): Boolean = id.isEmpty()
+}
+
+class ResourceText(val resource: Resource<*>) : Text {
+    override val isEmpty: Boolean = resource.isEmpty()
 }
