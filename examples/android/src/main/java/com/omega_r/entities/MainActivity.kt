@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.omega_r.libs.entities.images.Image
 
 class MainActivity : AppCompatActivity() {
 

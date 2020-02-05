@@ -1,4 +1,4 @@
-package com.omega_r.entities
+package com.omega_r.libs.entities
 
 interface Identifiable<T> {
 

@@ -1,6 +1,5 @@
-package com.omega_r.entities.images
+package com.omega_r.libs.entities.images
 
 import android.annotation.DrawableRes
-import com.omega_r.entities.Image
 
 class ResourceImage(@DrawableRes private val drawRes: Int) : Image
