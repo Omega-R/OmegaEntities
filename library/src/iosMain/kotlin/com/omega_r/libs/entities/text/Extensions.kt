@@ -1,8 +1,8 @@
 package com.omega_r.libs.entities.text
 
-import android.widget.TextView
 import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
+import platform.UIKit.UILabel
 
-fun TextView.setText(text: OmegaText) {
+fun UILabel.setText(text: OmegaText) {
     this@setText.text = text.getString()
 }

@@ -1,3 +1,3 @@
 package com.omega_r.libs.entities
 
-interface Size
+interface OmegaSize

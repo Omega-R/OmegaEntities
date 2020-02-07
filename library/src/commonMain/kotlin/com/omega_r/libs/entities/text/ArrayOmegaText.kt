@@ -1,9 +1,8 @@
 package com.omega_r.libs.entities.text
 
-internal data class ArrayText internal constructor(private val list: List<Text>) :
-    Text {
+internal data class ArrayOmegaText internal constructor(private val list: List<OmegaText>) : OmegaText {
 
-    internal constructor(vararg text: Text): this(text.toList())
+    internal constructor(vararg text: OmegaText): this(text.toList())
 
     override val isEmpty: Boolean
         get() {

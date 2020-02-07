@@ -1,16 +1,18 @@
 package com.omega_r.entities
 
 import android.app.Application
-import com.omega_r.libs.entities.text.IntResTextProcessor
-import com.omega_r.libs.entities.text.ResourceText
-import com.omega_r.libs.entities.text.processor.TextProcessors
+import com.omega_r.libs.entities.text.IntResOmegaTextProcessor
+import com.omega_r.libs.entities.text.ResourceOmegaText
+import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
 
 class OEApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        TextProcessors.current = TextProcessors.default.apply {
-            addProcessor(ResourceText::class, IntResTextProcessor(resources))
-        }
+        OmegaTextProcessors.addProcessor(
+            ResourceOmegaText::class.simpleName!!,
+            IntResOmegaTextProcessor(resources)
+        )
+
     }
 }

@@ -4,55 +4,55 @@ private const val DEFAULT_CAPACITY = 10
 
 class TextBuilder(capacity: Int) {
 
-    private val list: MutableList<Text> = ArrayList(capacity)
+    private val list: MutableList<OmegaText> = ArrayList(capacity)
 
     constructor() : this(DEFAULT_CAPACITY)
 
-    constructor(list: List<Text>) : this(list.size + DEFAULT_CAPACITY) {
+    constructor(list: List<OmegaText>) : this(list.size + DEFAULT_CAPACITY) {
         this.list.addAll(list)
     }
 
-    constructor(vararg text: Text) : this(text.size + DEFAULT_CAPACITY) {
+    constructor(vararg text: OmegaText) : this(text.size + DEFAULT_CAPACITY) {
         list.addAll(text)
     }
 
-    fun append(text: Text): TextBuilder {
+    fun append(text: OmegaText): TextBuilder {
         list += text
         return this
     }
 
     fun append(value: String) = append(
-        Text.from(
+        OmegaText.from(
             value
         )
     )
 
-    fun append(stringHolder: StringHolder) = append(
-        Text.from(stringHolder)
+    fun append(stringHolder: OmegaStringHolder) = append(
+        OmegaText.from(stringHolder)
     )
 
-    fun append(textHolder: TextHolder) = append(textHolder.text)
+    fun append(textHolder: OmegaTextHolder) = append(textHolder.text)
 
-    fun append(vararg texts: Text) = append(
-        Text.from(*texts)
+    fun append(vararg texts: OmegaText) = append(
+        OmegaText.from(*texts)
     )
 
-    fun insert(text: Text, index: Int): TextBuilder {
+    fun insert(text: OmegaText, index: Int): TextBuilder {
         list.add(index, text)
         return this
     }
 
-    fun toText(): Text = Text.from(list)
+    fun toText(): OmegaText = OmegaText.from(list)
 
     fun build() = toText()
 
-    class BuilderText(private val builder: TextBuilder) : Text {
+    class BuilderOmegaText(private val builder: TextBuilder) : OmegaText {
 
-        constructor(text: Text) : this(TextBuilder(text))
+        constructor(text: OmegaText) : this(TextBuilder(text))
 
         constructor() : this(TextBuilder())
 
-        override val text: Text
+        override val text: OmegaText
             get() = builder.build()
 
         override val isEmpty: Boolean
@@ -65,17 +65,17 @@ class TextBuilder(capacity: Int) {
                 return true
             }
 
-        fun insert(text: Text, index: Int): BuilderText {
+        fun insert(text: OmegaText, index: Int): BuilderOmegaText {
             builder.insert(text, index)
             return this
         }
 
-        override operator fun plus(text: Text): Text {
+        override operator fun plus(text: OmegaText): OmegaText {
             builder.append(text)
             return this
         }
 
-        override operator fun plus(string: String): Text {
+        override operator fun plus(string: String): OmegaText {
             builder.append(string)
             return this
         }

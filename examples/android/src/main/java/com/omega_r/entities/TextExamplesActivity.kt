@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.omega_r.libs.entities.text.Text
+import com.omega_r.libs.entities.text.OmegaText
 import com.omega_r.libs.entities.text.fromRes
 import com.omega_r.libs.entities.text.setText
 import kotlinx.android.synthetic.main.activity_text_examples.*
@@ -25,8 +25,8 @@ class TextExamplesActivity : AppCompatActivity() {
 
         adapter.setItems(
             listOf(
-                Text.from("Text from String") to Text.from("String Example"),
-                Text.from("Text from Resource") to Text.fromRes(R.string.app_name)
+                OmegaText.from("Text from String") to OmegaText.from("String Example"),
+                OmegaText.from("Text from Resource") to OmegaText.fromRes(R.string.app_name)
             )
         )
     }
@@ -34,7 +34,7 @@ class TextExamplesActivity : AppCompatActivity() {
 
 private class Adapter : RecyclerView.Adapter<Adapter.VH>() {
 
-    private var items: List<Pair<Text, Text>> = emptyList()
+    private var items: List<Pair<OmegaText, OmegaText>> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return VH(
@@ -46,7 +46,7 @@ private class Adapter : RecyclerView.Adapter<Adapter.VH>() {
         )
     }
 
-    fun setItems(items: List<Pair<Text, Text>>) {
+    fun setItems(items: List<Pair<OmegaText, OmegaText>>) {
         this.items = items
         notifyDataSetChanged()
     }
