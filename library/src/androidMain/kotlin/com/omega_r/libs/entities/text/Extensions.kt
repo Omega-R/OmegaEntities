@@ -1,8 +1,10 @@
 package com.omega_r.libs.entities.text
 
 import android.widget.TextView
-import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
+import com.omega_r.libs.entities.OmegaResource
 
 fun TextView.setText(text: OmegaText) {
     this@setText.text = text.getString()
 }
+
+fun OmegaText.Companion.from(id: Int): OmegaText = from(OmegaResource(id))

@@ -1,21 +1,44 @@
 package com.omega_r.libs.entities.text
 
+import com.omega_r.libs.entities.OmegaResource
 import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
 import com.omega_r.libs.entities.text.styles.TextStyle
+import kotlin.jvm.JvmStatic
 
 interface OmegaText : OmegaTextHolder {
 
     companion object {
 
-        fun from(value: String): OmegaText = StringOmegaText(value)
+        @JvmStatic
+        val empty: OmegaText = OmegaStringText(null)
 
-        fun from(sequence: CharSequence): OmegaText = StringOmegaText(sequence.toString())
+        @JvmStatic
+        fun from(value: String): OmegaText = OmegaStringText(value)
 
-        fun from(holder: OmegaStringHolder): OmegaText = StringOmegaText(holder.string)
+        @JvmStatic
+        fun from(sequence: CharSequence): OmegaText = OmegaStringText(sequence.toString())
 
-        fun from(vararg text: OmegaText): OmegaText = ArrayOmegaText(*text)
+        @JvmStatic
+        fun from(holder: OmegaStringHolder): OmegaText = OmegaStringText(holder.string)
 
-        fun from(list: List<OmegaText>): OmegaText = ArrayOmegaText(list)
+        @JvmStatic
+        fun from(resource: OmegaResource<*>): OmegaText = OmegaResourceText(resource)
+
+        @JvmStatic
+        fun from(resource: OmegaResource<*>, vararg formatArgs: Any): OmegaText = OmegaResourceText(resource, *formatArgs)
+
+        @JvmStatic
+        fun fromPlurals(resource: OmegaResource<*>, quantity: Int, vararg formatArgs: Any): OmegaText
+                = OmegaPluralsText(resource, quantity, *formatArgs)
+
+        @JvmStatic
+        fun from(vararg text: OmegaText): OmegaText = OmegaArrayText(*text)
+
+        @JvmStatic
+        fun from(list: List<OmegaText>): OmegaText = OmegaArrayText(list)
+
+        @JvmStatic
+        fun from(text: OmegaText, style: TextStyle): OmegaText = StyledOmegaText(text, style)
 
     }
 
@@ -23,6 +46,7 @@ interface OmegaText : OmegaTextHolder {
         get() = this
 
     val isEmpty: Boolean
+        get() = getString().isNullOrEmpty()
 
     operator fun plus(text: OmegaText): OmegaText = TextBuilder.BuilderOmegaText(this) + text
 
@@ -32,7 +56,7 @@ interface OmegaText : OmegaTextHolder {
 
     operator fun plus(textStyle: TextStyle): OmegaText = StyledOmegaText(this, textStyle)
 
-    fun getString() : String? = with(OmegaTextProcessors) { extract() }
+    fun getString(): String? = with(OmegaTextProcessors) { extract() }
 
 }
 

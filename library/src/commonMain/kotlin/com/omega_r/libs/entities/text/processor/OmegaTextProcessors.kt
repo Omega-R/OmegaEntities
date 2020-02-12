@@ -3,10 +3,9 @@ package com.omega_r.libs.entities.text.processor
 import com.omega_r.libs.entities.text.OmegaText
 import kotlin.native.concurrent.SharedImmutable
 import kotlin.native.concurrent.ThreadLocal
-import kotlin.reflect.KClass
 
-@SharedImmutable
 @ThreadLocal
+@SharedImmutable
 val textProcessors = OmegaTextProcessors
 
 object OmegaTextProcessors {
@@ -22,6 +21,7 @@ object OmegaTextProcessors {
     private fun OmegaText.getProcessor(): OmegaTextProcessor<OmegaText> {
         @Suppress("UNCHECKED_CAST")
         return map[this::class.simpleName!!] as? OmegaTextProcessor<OmegaText>
-            ?: throw IllegalArgumentException("TextProcessor not found for ${this::class}")
+                ?: throw IllegalArgumentException("TextProcessor not found for ${this::class}")
     }
+
 }

@@ -1,15 +1,15 @@
 package com.omega_r.entities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omega_r.libs.entities.text.OmegaText
-import com.omega_r.libs.entities.text.fromRes
+import com.omega_r.libs.entities.text.from
 import com.omega_r.libs.entities.text.setText
 import kotlinx.android.synthetic.main.activity_text_examples.*
 
@@ -26,7 +26,7 @@ class TextExamplesActivity : AppCompatActivity() {
         adapter.setItems(
             listOf(
                 OmegaText.from("Text from String") to OmegaText.from("String Example"),
-                OmegaText.from("Text from Resource") to OmegaText.fromRes(R.string.app_name)
+                OmegaText.from("Text from Resource") to OmegaText.from(R.string.app_name)
             )
         )
     }

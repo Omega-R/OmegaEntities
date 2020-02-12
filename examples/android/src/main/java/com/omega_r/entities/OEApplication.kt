@@ -1,8 +1,8 @@
 package com.omega_r.entities
 
 import android.app.Application
-import com.omega_r.libs.entities.text.IntResOmegaTextProcessor
-import com.omega_r.libs.entities.text.ResourceOmegaText
+import com.omega_r.libs.entities.text.OmegaResourceTextProcessor
+import com.omega_r.libs.entities.text.OmegaResourceText
 import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
 
 class OEApplication : Application() {
@@ -10,8 +10,8 @@ class OEApplication : Application() {
         super.onCreate()
 
         OmegaTextProcessors.addProcessor(
-            ResourceOmegaText::class.simpleName!!,
-            IntResOmegaTextProcessor(resources)
+            OmegaResourceText::class.simpleName!!,
+            OmegaResourceTextProcessor(resources)
         )
 
     }
