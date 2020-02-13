@@ -1,17 +1,6 @@
 package com.omega_r.libs.entities.text
 
-import com.omega_r.libs.entities.text.processor.OmegaTextProcessor
-import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
-
-internal data class OmegaArrayText internal constructor(val list: List<OmegaText>) : OmegaText {
-
-    companion object {
-
-        init {
-            OmegaTextProcessors.addProcessor(OmegaArrayText::class.simpleName!!, OmegaArrayTextTextProcessor())
-        }
-
-    }
+data class OmegaArrayText internal constructor(val list: List<OmegaText>) : OmegaText {
 
     internal constructor(vararg text: OmegaText) : this(text.toList())
 
@@ -23,12 +12,5 @@ internal data class OmegaArrayText internal constructor(val list: List<OmegaText
             }
             return true
         }
-
-
-    class OmegaArrayTextTextProcessor : OmegaTextProcessor<OmegaArrayText>() {
-
-        override fun OmegaArrayText.extract(): String? = list.joinToString(separator = "") { it.getString() ?: "" }
-
-    }
 
 }

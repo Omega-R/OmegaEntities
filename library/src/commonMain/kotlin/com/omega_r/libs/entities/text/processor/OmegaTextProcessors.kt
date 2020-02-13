@@ -16,7 +16,7 @@ object OmegaTextProcessors {
         map[className] = processor
     }
 
-    fun OmegaText.extract(): String? = with(getProcessor()) { extract() }
+    fun OmegaText.extract(): CharSequence? = with(getProcessor()) { extract() }
 
     private fun OmegaText.getProcessor(): OmegaTextProcessor<OmegaText> {
         @Suppress("UNCHECKED_CAST")

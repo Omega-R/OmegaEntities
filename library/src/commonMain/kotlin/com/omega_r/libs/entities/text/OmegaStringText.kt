@@ -11,9 +11,9 @@ data class OmegaStringText(val value: String?) : OmegaText {
         }
     }
 
-    class OmegaStringTextProcessor : OmegaTextProcessor<OmegaStringText>() {
+    class OmegaStringTextProcessor : OmegaTextProcessor<OmegaStringText> {
 
-        override fun OmegaStringText.extract(): String? = value
+        override fun OmegaStringText.extract(): CharSequence? = value
 
     }
 

@@ -1,10 +1,11 @@
-package com.omega_r.libs.entities.text
+package com.omega_r.libs.entities.text.processor
 
 import android.content.res.Resources
-import com.omega_r.libs.entities.text.processor.OmegaTextProcessor
-import java.lang.IllegalStateException
+import com.omega_r.libs.entities.text.OmegaPluralsText
+import com.omega_r.libs.entities.text.OmegaResourceText
+import com.omega_r.libs.entities.text.OmegaText
 
-class OmegaResourceTextProcessor(private val resources: Resources) : OmegaTextProcessor<OmegaResourceText<Int>>() {
+class OmegaResourceTextProcessor(private val resources: Resources) : OmegaTextProcessor<OmegaResourceText<Int>> {
 
     override fun OmegaResourceText<Int>.extract(): String? {
         val formattedArray = formatArgs.map {

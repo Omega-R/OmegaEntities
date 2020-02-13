@@ -2,7 +2,7 @@ package com.omega_r.libs.entities.text
 
 import com.omega_r.libs.entities.OmegaResource
 import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
-import com.omega_r.libs.entities.text.styles.TextStyle
+import com.omega_r.libs.entities.text.styles.OmegaTextStyle
 import kotlin.jvm.JvmStatic
 
 interface OmegaText : OmegaTextHolder {
@@ -38,7 +38,7 @@ interface OmegaText : OmegaTextHolder {
         fun from(list: List<OmegaText>): OmegaText = OmegaArrayText(list)
 
         @JvmStatic
-        fun from(text: OmegaText, style: TextStyle): OmegaText = StyledOmegaText(text, style)
+        fun from(text: OmegaText, style: OmegaTextStyle): OmegaText = StyledOmegaText(text, style)
 
     }
 
@@ -46,7 +46,7 @@ interface OmegaText : OmegaTextHolder {
         get() = this
 
     val isEmpty: Boolean
-        get() = getString().isNullOrEmpty()
+        get() = getCharSequence().isNullOrEmpty()
 
     operator fun plus(text: OmegaText): OmegaText = TextBuilder.BuilderOmegaText(this) + text
 
@@ -54,9 +54,11 @@ interface OmegaText : OmegaTextHolder {
 
     operator fun plus(string: String): OmegaText = TextBuilder.BuilderOmegaText(this) + string
 
-    operator fun plus(textStyle: TextStyle): OmegaText = StyledOmegaText(this, textStyle)
+    operator fun plus(textStyle: OmegaTextStyle): OmegaText = StyledOmegaText(this, textStyle)
 
-    fun getString(): String? = with(OmegaTextProcessors) { extract() }
+    fun getString(): String? = getCharSequence()?.toString()
+
+    fun getCharSequence(): CharSequence? = with(OmegaTextProcessors) { extract() }
 
 }
 
