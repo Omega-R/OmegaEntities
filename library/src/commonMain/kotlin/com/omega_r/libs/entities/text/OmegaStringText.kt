@@ -1,13 +1,13 @@
 package com.omega_r.libs.entities.text
 
 import com.omega_r.libs.entities.text.processor.OmegaTextProcessor
-import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
+import com.omega_r.libs.entities.text.processor.TextProcessorsHolder
 
 data class OmegaStringText(val value: String?) : OmegaText {
 
     companion object {
         init {
-            OmegaTextProcessors.addProcessor(OmegaStringText::class.simpleName!!, OmegaStringTextProcessor())
+            TextProcessorsHolder.addProcessor(OmegaStringText::class, OmegaStringTextProcessor())
         }
     }
 

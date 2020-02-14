@@ -1,8 +1,9 @@
 package com.omega_r.libs.entities.colors
 
+import com.omega_r.libs.entities.OmegaEntity
 import com.omega_r.libs.entities.OmegaResource
 
-interface OmegaColor {
+interface OmegaColor : OmegaEntity {
 
     val colorInt: Int
 

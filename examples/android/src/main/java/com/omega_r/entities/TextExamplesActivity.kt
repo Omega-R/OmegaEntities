@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.omega_r.libs.entities.text.OmegaText
 import com.omega_r.libs.entities.text.from
 import com.omega_r.libs.entities.text.setText
+import com.omega_r.libs.entities.text.styles.OmegaTextStyle
+import com.omega_r.libs.entities.text.styles.bold
+import com.omega_r.libs.entities.text.styles.boldItalic
+import com.omega_r.libs.entities.text.styles.underline
 import kotlinx.android.synthetic.main.activity_text_examples.*
 
 class TextExamplesActivity : AppCompatActivity() {
@@ -24,10 +28,15 @@ class TextExamplesActivity : AppCompatActivity() {
         recyclerview.layoutManager = LinearLayoutManager(this)
 
         adapter.setItems(
-            listOf(
-                OmegaText.from("Text from String") to OmegaText.from("String Example"),
-                OmegaText.from("Text from Resource") to OmegaText.from(R.string.app_name)
-            )
+                listOf(
+                        OmegaText.from("Text from String") to OmegaText.from("String Example")
+                                .plus(OmegaTextStyle.from(
+                                        OmegaTextStyle.Companion.underline(),
+                                        OmegaTextStyle.Companion.bold(),
+                                        OmegaTextStyle.Companion.boldItalic()
+                                )),
+                        OmegaText.from("Text from Resource") to OmegaText.from(R.string.app_name)
+                )
         )
     }
 }
@@ -38,11 +47,11 @@ private class Adapter : RecyclerView.Adapter<Adapter.VH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return VH(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_text_example,
-                parent,
-                false
-            )
+                LayoutInflater.from(parent.context).inflate(
+                        R.layout.item_text_example,
+                        parent,
+                        false
+                )
         )
     }
 

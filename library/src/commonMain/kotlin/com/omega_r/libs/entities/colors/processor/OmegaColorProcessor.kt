@@ -1,10 +1,6 @@
 package com.omega_r.libs.entities.colors.processor
 
-import com.omega_r.libs.entities.OmegaProcessor
 import com.omega_r.libs.entities.colors.OmegaColor
+import com.omega_r.libs.entities.processors.OmegaProcessor
 
-interface OmegaColorProcessor<T : OmegaColor> : OmegaProcessor<T, Int?> {
-
-    override fun T.extract(): Int?
-
-}
+interface OmegaColorProcessor<T : OmegaColor> : OmegaProcessor<T, Int?>

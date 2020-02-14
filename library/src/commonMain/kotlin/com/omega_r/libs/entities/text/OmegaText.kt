@@ -1,11 +1,12 @@
 package com.omega_r.libs.entities.text
 
+import com.omega_r.libs.entities.OmegaEntity
 import com.omega_r.libs.entities.OmegaResource
-import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
+import com.omega_r.libs.entities.text.processor.TextProcessorsHolder
 import com.omega_r.libs.entities.text.styles.OmegaTextStyle
 import kotlin.jvm.JvmStatic
 
-interface OmegaText : OmegaTextHolder {
+interface OmegaText : OmegaEntity, OmegaTextHolder {
 
     companion object {
 
@@ -58,7 +59,7 @@ interface OmegaText : OmegaTextHolder {
 
     fun getString(): String? = getCharSequence()?.toString()
 
-    fun getCharSequence(): CharSequence? = with(OmegaTextProcessors) { extract() }
+    fun getCharSequence(): CharSequence? = with(TextProcessorsHolder) { extract() }
 
 }
 
@@ -73,3 +74,5 @@ interface OmegaTextHolder {
     val text: OmegaText
 
 }
+
+fun String.toText(): OmegaText = OmegaText.from(this)

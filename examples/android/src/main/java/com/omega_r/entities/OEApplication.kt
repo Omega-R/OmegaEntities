@@ -1,18 +1,20 @@
 package com.omega_r.entities
 
 import android.app.Application
-import com.omega_r.libs.entities.text.processor.OmegaResourceTextProcessor
 import com.omega_r.libs.entities.text.OmegaResourceText
-import com.omega_r.libs.entities.text.processor.OmegaTextProcessors
+import com.omega_r.libs.entities.text.StyledOmegaText
+import com.omega_r.libs.entities.text.processor.OmegaResourceTextProcessor
+import com.omega_r.libs.entities.text.processor.OmegaStyledTextProcessor
+import com.omega_r.libs.entities.text.processor.TextProcessorsHolder
 
 class OEApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
-
-        OmegaTextProcessors.addProcessor(
-            OmegaResourceText::class.simpleName!!,
-                OmegaResourceTextProcessor(resources)
+        TextProcessorsHolder.addProcessors(
+                OmegaResourceText::class to OmegaResourceTextProcessor(resources),
+                StyledOmegaText::class to OmegaStyledTextProcessor(this)
         )
-
     }
+
 }
