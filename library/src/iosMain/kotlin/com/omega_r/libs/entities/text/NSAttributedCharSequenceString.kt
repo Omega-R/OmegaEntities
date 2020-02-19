@@ -1,8 +1,6 @@
 package com.omega_r.libs.entities.text
 
-import com.omega_r.libs.entities.text.processor.OmegaTextProcessor
 import platform.Foundation.NSAttributedString
-import platform.Foundation.NSBundle
 
 //class ResOmegaTextProcessor(
 //        private val bundle: NSBundle = NSBundle.mainBundle,

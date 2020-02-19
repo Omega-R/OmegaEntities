@@ -7,11 +7,11 @@ open class ProcessorsHolder<T : OmegaEntity, Result> {
 
     private val processorsMap: MutableMap<KClass<*>, OmegaProcessor<*, *>> = mutableMapOf()
 
-    open fun addProcessors(vararg processors: Pair<KClass<*>, OmegaProcessor<*, *>>) {
+    open fun <E: T> addProcessors(vararg processors: Pair<KClass<E>, OmegaProcessor<E, Result>>) {
         processors.forEach { addProcessor(it.first, it.second) }
     }
 
-    open fun addProcessor(className: KClass<*>, processor: OmegaProcessor<*, *>) {
+    open fun <E: T> addProcessor(className: KClass<E>, processor: OmegaProcessor<E, Result>) {
         processorsMap[className] = processor
     }
 

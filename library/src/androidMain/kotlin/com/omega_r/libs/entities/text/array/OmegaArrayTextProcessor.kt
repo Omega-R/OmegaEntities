@@ -1,13 +1,14 @@
-package com.omega_r.libs.entities.text.processor
+package com.omega_r.libs.entities.text.array
 
 import android.text.SpannableStringBuilder
-import com.omega_r.libs.entities.text.OmegaArrayText
+import com.omega_r.libs.entities.text.OmegaTextProcessor
 
-actual class OmegaArrayTextProcessor : OmegaTextProcessor<OmegaArrayText> {
+actual class OmegaArrayTextProcessor :
+    OmegaTextProcessor<OmegaArrayText> {
 
     override fun OmegaArrayText.extract(): CharSequence? {
         val builder = SpannableStringBuilder()
-        list.forEach { omegaText ->
+        array.forEach { omegaText ->
             omegaText.getCharSequence()?.let { charSequence ->
                 builder.append(charSequence)
             }

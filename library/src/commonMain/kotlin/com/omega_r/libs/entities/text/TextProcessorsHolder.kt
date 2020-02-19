@@ -1,6 +1,5 @@
-package com.omega_r.libs.entities.text.processor
+package com.omega_r.libs.entities.text
 
 import com.omega_r.libs.entities.processors.ProcessorsHolder
-import com.omega_r.libs.entities.text.OmegaText
 
 object TextProcessorsHolder : ProcessorsHolder<OmegaText, CharSequence?>()
