@@ -78,6 +78,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+                implementation("org.jetbrains.kotlinx:kotlinx-io-jvm:0.1.16")
+                implementation("io.ktor:ktor-client-core:1.3.1")
             }
         }
 

@@ -12,7 +12,7 @@ import com.omega_r.libs.entities.text.resource.text.OmegaTextResourceTextProcess
 import com.omega_r.libs.entities.text.styled.OmegaDefaultStyledTextProcessor
 import com.omega_r.libs.entities.text.styled.OmegaStyledText
 
-interface OmegaTextProcessorsHolder : ProcessorsHolder<OmegaText, CharSequence?> {
+interface OmegaTextProcessorsHolder : ProcessorsHolder<OmegaText, OmegaTextProcessor<out OmegaText>> {
 
     companion object {
 
@@ -20,7 +20,7 @@ interface OmegaTextProcessorsHolder : ProcessorsHolder<OmegaText, CharSequence?>
 
     }
 
-    object Default : ProcessorsHolder.Default<OmegaText, CharSequence?>(), OmegaTextProcessorsHolder {
+    object Default : ProcessorsHolder.Default<OmegaText, OmegaTextProcessor<out OmegaText>>(), OmegaTextProcessorsHolder {
 
         init {
             addProcessors(
@@ -34,4 +34,3 @@ interface OmegaTextProcessorsHolder : ProcessorsHolder<OmegaText, CharSequence?>
     }
 
 }
-
