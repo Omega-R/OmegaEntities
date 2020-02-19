@@ -35,7 +35,7 @@ interface OmegaText : OmegaEntity, OmegaTextHolder {
 
         @JvmStatic
         fun from(resource: OmegaResource.Plurals, quantity: Int, vararg formatArgs: Any): OmegaText =
-            OmegaPluralsText(resource, quantity, *formatArgs)
+                OmegaPluralsText(resource, quantity, *formatArgs)
 
         @JvmStatic
         fun from(vararg text: OmegaText): OmegaText = OmegaArrayText(*text)
@@ -60,17 +60,17 @@ interface OmegaText : OmegaEntity, OmegaTextHolder {
 
     operator fun plus(string: String): OmegaText = this + string.toText()
 
-    operator fun plus(textStyle: OmegaTextStyle): OmegaText =
-        OmegaStyledText(this, textStyle)
+    operator fun plus(textStyle: OmegaTextStyle): OmegaText = OmegaStyledText(this, textStyle)
 
     @JvmOverloads
-    fun getString(processorsHolder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): String? {
-        return getCharSequence(processorsHolder)?.toString()
-    }
+    fun getString(holder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): String? =
+            getCharSequence(holder)?.toString()
 
     @JvmOverloads
-    fun getCharSequence(processorsHolder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): CharSequence? {
-        return with(processorsHolder) { extract() }
+    fun getCharSequence(holder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): CharSequence? = with(holder) {
+        with(getProcessor() as OmegaTextProcessor<OmegaText>) {
+            extract()
+        }
     }
 }
 
