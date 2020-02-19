@@ -1,6 +1,9 @@
-package com.omega_r.libs.entities.text
+package com.omega_r.libs.entities.colors
 
+import com.omega_r.libs.entities.colors.resource.OmegaResourceColor
+import com.omega_r.libs.entities.colors.resource.OmegaResourceColorProcessor
 import com.omega_r.libs.entities.processors.ProcessorsHolder
+import com.omega_r.libs.entities.text.OmegaText
 import com.omega_r.libs.entities.text.array.OmegaArrayText
 import com.omega_r.libs.entities.text.array.OmegaArrayTextProcessor
 import com.omega_r.libs.entities.text.resource.plurals.OmegaPluralsResourceText
@@ -12,23 +15,18 @@ import com.omega_r.libs.entities.text.resource.text.OmegaTextResourceTextProcess
 import com.omega_r.libs.entities.text.styled.OmegaDefaultStyledTextProcessor
 import com.omega_r.libs.entities.text.styled.OmegaStyledText
 
-interface OmegaTextProcessorsHolder : ProcessorsHolder<OmegaText, CharSequence?> {
+interface OmegaColorProcessorsHolder : ProcessorsHolder<OmegaColor, Int?> {
 
     companion object {
 
-        var current: OmegaTextProcessorsHolder = Default
+        var current: OmegaColorProcessorsHolder = Default
 
     }
 
-    object Default : ProcessorsHolder.Default<OmegaText, CharSequence?>(), OmegaTextProcessorsHolder {
+    object Default : ProcessorsHolder.Default<OmegaColor, Int?>(), OmegaColorProcessorsHolder {
 
         init {
-            addProcessors(
-                OmegaStyledText::class to OmegaDefaultStyledTextProcessor,
-                OmegaArrayText::class to OmegaArrayTextProcessor,
-                OmegaTextResourceText::class to OmegaTextResourceTextProcessor,
-                OmegaPluralsResourceText::class to OmegaPluralsResourceTextProcessor
-            )
+            addProcessors(OmegaResourceColor::class to OmegaResourceColorProcessor)
         }
 
     }
