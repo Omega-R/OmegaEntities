@@ -8,6 +8,7 @@ import com.omega_r.libs.entities.text.resource.OmegaResourceText
 import com.omega_r.libs.entities.text.string.OmegaStringText
 import com.omega_r.libs.entities.text.styled.OmegaStyledText
 import com.omega_r.libs.entities.text.styled.styles.OmegaTextStyle
+import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
 interface OmegaText : OmegaEntity, OmegaTextHolder {
@@ -18,41 +19,32 @@ interface OmegaText : OmegaEntity, OmegaTextHolder {
         val empty: OmegaText = OmegaStringText(null)
 
         @JvmStatic
-        fun from(value: String): OmegaText =
-            OmegaStringText(value)
+        fun from(value: String): OmegaText = OmegaStringText(value)
 
         @JvmStatic
-        fun from(sequence: CharSequence): OmegaText =
-            OmegaStringText(sequence.toString())
+        fun from(sequence: CharSequence): OmegaText = OmegaStringText(sequence.toString())
 
         @JvmStatic
-        fun from(holder: OmegaStringHolder): OmegaText =
-            OmegaStringText(holder.string)
+        fun from(holder: OmegaStringHolder): OmegaText = OmegaStringText(holder.string)
 
         @JvmStatic
-        fun from(resource: OmegaResource<*>): OmegaText =
-            OmegaResourceText(resource)
+        fun from(resource: OmegaResource.Text): OmegaText = OmegaResourceText(resource)
 
         @JvmStatic
-        fun from(resource: OmegaResource<*>, vararg formatArgs: Any): OmegaText =
-            OmegaResourceText(resource, *formatArgs)
+        fun from(resource: OmegaResource.Text, vararg formatArgs: Any): OmegaText = OmegaResourceText(resource, *formatArgs)
 
         @JvmStatic
-        fun fromPlurals(resource: OmegaResource<*>, quantity: Int, vararg formatArgs: Any): OmegaText
-                =
+        fun from(resource: OmegaResource.Plurals, quantity: Int, vararg formatArgs: Any): OmegaText =
             OmegaPluralsText(resource, quantity, *formatArgs)
 
         @JvmStatic
-        fun from(vararg text: OmegaText): OmegaText =
-            OmegaArrayText(*text)
+        fun from(vararg text: OmegaText): OmegaText = OmegaArrayText(*text)
 
         @JvmStatic
-        fun from(list: List<OmegaText>): OmegaText =
-            OmegaArrayText(list)
+        fun from(list: List<OmegaText>): OmegaText = OmegaArrayText(list)
 
         @JvmStatic
-        fun from(text: OmegaText, style: OmegaTextStyle): OmegaText =
-            OmegaStyledText(text, style)
+        fun from(text: OmegaText, style: OmegaTextStyle): OmegaText = OmegaStyledText(text, style)
 
     }
 
@@ -71,22 +63,15 @@ interface OmegaText : OmegaEntity, OmegaTextHolder {
     operator fun plus(textStyle: OmegaTextStyle): OmegaText =
         OmegaStyledText(this, textStyle)
 
-    fun getString(): String? = getCharSequence()?.toString()
+    @JvmOverloads
+    fun getString(processorsHolder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): String? {
+        return getCharSequence(processorsHolder)?.toString()
+    }
 
-    fun getCharSequence(): CharSequence? = with(TextProcessorsHolder) { extract() }
-
-}
-
-interface OmegaStringHolder {
-
-    val string: String?
-
-}
-
-interface OmegaTextHolder {
-
-    val text: OmegaText
-
+    @JvmOverloads
+    fun getCharSequence(processorsHolder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): CharSequence? {
+        return with(processorsHolder) { extract() }
+    }
 }
 
 fun String.toText(): OmegaText = OmegaText.from(this)

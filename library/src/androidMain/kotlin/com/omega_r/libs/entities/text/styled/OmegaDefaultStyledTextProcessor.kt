@@ -6,22 +6,16 @@ import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
 import android.text.style.UnderlineSpan
-import com.omega_r.libs.entities.text.OmegaTextProcessor
-import com.omega_r.libs.entities.text.styled.styles.OmegaDecorationTextStyle.DecorationStyle.*
-import com.omega_r.libs.entities.text.styled.styles.OmegaFontStyleTextStyle.Style.*
 import com.omega_r.libs.entities.text.styled.styles.OmegaDecorationTextStyle
 import com.omega_r.libs.entities.text.styled.styles.OmegaFontStyleTextStyle
 import com.omega_r.libs.entities.text.styled.styles.OmegaFontTextStyle
 import com.omega_r.libs.entities.text.styled.styles.OmegaTextStyle
 
-object OmegaStyledTextProcessor : OmegaTextProcessor<OmegaStyledText> {
+actual object OmegaDefaultStyledTextProcessor : OmegaStyledTextProcessor {
 
-    override fun OmegaStyledText.extract(): CharSequence? =
+    actual override fun OmegaStyledText.extract(): CharSequence? =
         sourceText.getCharSequence()?.let {
-            applyStyle(
-                it,
-                styles = styles
-            )
+            applyStyle(it, styles = styles)
         }
 
     private fun applyStyle(charSequence: CharSequence, styles: Array<out OmegaTextStyle>): CharSequence {
@@ -45,8 +39,8 @@ object OmegaStyledTextProcessor : OmegaTextProcessor<OmegaStyledText> {
             is OmegaDecorationTextStyle -> {
                 style.styles.forEach {
                     when (it) {
-                        UNDERLINE -> setSpan(UnderlineSpan())
-                        STRIKETHROUGH -> setSpan(StrikethroughSpan())
+                        OmegaDecorationTextStyle.DecorationStyle.UNDERLINE -> setSpan(UnderlineSpan())
+                        OmegaDecorationTextStyle.DecorationStyle.STRIKETHROUGH -> setSpan(StrikethroughSpan())
                     }
                 }
             }
@@ -54,8 +48,8 @@ object OmegaStyledTextProcessor : OmegaTextProcessor<OmegaStyledText> {
                 if (style.styles.isEmpty()) {
                     setSpan(StyleSpan(Typeface.NORMAL))
                 } else {
-                    val isBold = BOLD in style.styles
-                    val isItalic = ITALIC in style.styles
+                    val isBold = OmegaFontStyleTextStyle.Style.BOLD in style.styles
+                    val isItalic = OmegaFontStyleTextStyle.Style.ITALIC in style.styles
                     when {
                         isBold && isItalic -> setSpan(StyleSpan(Typeface.BOLD_ITALIC))
                         isBold -> setSpan(StyleSpan(Typeface.BOLD))

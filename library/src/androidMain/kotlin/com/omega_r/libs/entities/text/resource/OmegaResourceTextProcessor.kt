@@ -1,25 +1,65 @@
 package com.omega_r.libs.entities.text.resource
 
 import android.content.res.Resources
-import com.omega_r.libs.entities.text.plurals.OmegaPluralsText
-import com.omega_r.libs.entities.text.OmegaText
-import com.omega_r.libs.entities.text.OmegaTextProcessor
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
+import com.omega_r.libs.entities.OmegaResource.Text
 
-class OmegaResourceTextProcessor(private val resources: Resources) :
-    OmegaTextProcessor<OmegaResourceText<Int>> {
+actual object OmegaResourceTextProcessor : OmegaBaseResourceTextProcessor<OmegaResourceText>() {
 
-    override fun OmegaResourceText<Int>.extract(): String? {
-        val formattedArray = formatArgs.map {
-            when (it) {
-                is OmegaText -> it.getString()
-                else -> it
+    private lateinit var resources: Resources
+
+    fun setResources(resources: Resources) {
+        this.resources = resources
+    }
+
+
+    @Suppress("UNCHECKED_CAST")
+    override fun extract(resource: Text): CharSequence? {
+        return resources.getText(resource.id)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun extractWithArgs(resource: Text, formatArgs: Array<out Any>): CharSequence? {
+        val formatString = resources.getText(resource.id)
+
+        val htmlFormatString = if (formatString is Spanned) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.toHtml(formatString, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+            } else {
+                Html.toHtml(formatString)
             }
-        }.toTypedArray()
+        } else {
+            Html.escapeHtml(formatString)
+        }
+        val htmlResultString = Text.format(htmlFormatString, *formatArgs)
 
-        return when (this) {
-            is OmegaPluralsText -> resources.getQuantityString(resource.id, quantity, *formatArgs)
-            else -> resources.getString(resource.id, *formattedArray)
+        // Convert back to a CharSequence, recovering any of the HTML styling.
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(htmlResultString, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            Html.fromHtml(htmlResultString)
         }
     }
+
+    override fun mapFormatArg(any: Any?): Any {
+        return when (val result = super.mapFormatArg(any)) {
+            is Spanned -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    Html.toHtml(result, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+                } else {
+                    Html.toHtml(result)
+                }
+            }
+            is CharSequence -> {
+                Html.escapeHtml(result)
+            }
+            else -> result
+        }
+    }
+
+
+
 
 }

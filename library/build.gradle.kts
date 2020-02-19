@@ -59,17 +59,6 @@ kotlin {
         }
     }
 
-    js {
-        val main by compilations.getting {
-            kotlinOptions {
-                metaInfo = true
-                sourceMap = true
-                sourceMapEmbedSources = "always"
-                moduleKind = "commonjs"
-            }
-        }
-    }
-
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
@@ -114,19 +103,6 @@ kotlin {
             }
         }
 
-        val jsMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
-                implementation("org.jetbrains.kotlin:kotlin-stdlib")
-            }
-        }
-
-        //JS tests currently not working, need to wait for jetbrains to release support
-        val jsTest by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test-js")
-            }
-        }
     }
 }
 
