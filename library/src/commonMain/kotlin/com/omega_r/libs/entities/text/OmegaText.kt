@@ -8,42 +8,30 @@ import com.omega_r.libs.entities.text.resource.OmegaResourceText
 import com.omega_r.libs.entities.text.string.OmegaStringText
 import com.omega_r.libs.entities.text.styled.OmegaStyledText
 import com.omega_r.libs.entities.text.styled.styles.OmegaTextStyle
-import kotlin.jvm.JvmOverloads
-import kotlin.jvm.JvmStatic
 
 interface OmegaText : OmegaEntity, OmegaTextHolder {
 
     companion object {
 
-        @JvmStatic
         val empty: OmegaText = OmegaStringText(null)
 
-        @JvmStatic
         fun from(value: String): OmegaText = OmegaStringText(value)
 
-        @JvmStatic
         fun from(sequence: CharSequence): OmegaText = OmegaStringText(sequence.toString())
 
-        @JvmStatic
         fun from(holder: OmegaStringHolder): OmegaText = OmegaStringText(holder.string)
 
-        @JvmStatic
         fun from(resource: OmegaResource.Text): OmegaText = OmegaResourceText(resource)
 
-        @JvmStatic
         fun from(resource: OmegaResource.Text, vararg formatArgs: Any): OmegaText = OmegaResourceText(resource, *formatArgs)
 
-        @JvmStatic
         fun from(resource: OmegaResource.Plurals, quantity: Int, vararg formatArgs: Any): OmegaText =
                 OmegaPluralsText(resource, quantity, *formatArgs)
 
-        @JvmStatic
         fun from(vararg text: OmegaText): OmegaText = OmegaArrayText(*text)
 
-        @JvmStatic
         fun from(list: List<OmegaText>): OmegaText = OmegaArrayText(list)
 
-        @JvmStatic
         fun from(text: OmegaText, style: OmegaTextStyle): OmegaText = OmegaStyledText(text, style)
 
     }
@@ -62,11 +50,9 @@ interface OmegaText : OmegaEntity, OmegaTextHolder {
 
     operator fun plus(textStyle: OmegaTextStyle): OmegaText = OmegaStyledText(this, textStyle)
 
-    @JvmOverloads
     fun getString(holder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): String? =
             getCharSequence(holder)?.toString()
 
-    @JvmOverloads
     fun getCharSequence(holder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): CharSequence? = with(holder) {
         with(getProcessor() as OmegaTextProcessor<OmegaText>) {
             extract()

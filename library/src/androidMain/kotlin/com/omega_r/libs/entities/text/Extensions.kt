@@ -7,4 +7,4 @@ fun TextView.setText(text: OmegaText) {
     this@setText.text = text.getCharSequence()
 }
 
-fun OmegaText.Companion.from(id: Int): OmegaText = from(OmegaResource(id))
+//fun OmegaText.Companion.from(id: Int): OmegaText = from(OmegaResource(id))
