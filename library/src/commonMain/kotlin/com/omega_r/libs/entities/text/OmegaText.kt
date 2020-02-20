@@ -3,7 +3,7 @@ package com.omega_r.libs.entities.text
 import com.omega_r.libs.entities.OmegaEntity
 import com.omega_r.libs.entities.OmegaResource
 import com.omega_r.libs.entities.text.array.OmegaArrayText
-import com.omega_r.libs.entities.text.plurals.OmegaPluralsText
+import com.omega_r.libs.entities.text.resource.plurals.OmegaPluralsResourceText
 import com.omega_r.libs.entities.text.resource.OmegaResourceText
 import com.omega_r.libs.entities.text.string.OmegaStringText
 import com.omega_r.libs.entities.text.styled.OmegaStyledText
@@ -26,7 +26,7 @@ interface OmegaText : OmegaEntity, OmegaTextHolder {
         fun from(resource: OmegaResource.Text, vararg formatArgs: Any): OmegaText = OmegaResourceText(resource, *formatArgs)
 
         fun from(resource: OmegaResource.Plurals, quantity: Int, vararg formatArgs: Any): OmegaText =
-                OmegaPluralsText(resource, quantity, *formatArgs)
+            OmegaPluralsResourceText(resource, quantity, *formatArgs)
 
         fun from(vararg text: OmegaText): OmegaText = OmegaArrayText(*text)
 
