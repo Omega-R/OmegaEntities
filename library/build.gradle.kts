@@ -78,7 +78,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("org.jetbrains.kotlinx:kotlinx-io-jvm:0.1.16")
+//                implementation("org.jetbrains.kotlinx:kotlinx-io-jvm:0.1.16")
                 implementation("io.ktor:ktor-client-core:1.3.1")
             }
         }
@@ -93,6 +93,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib")
+                implementation("io.ktor:ktor-client-android:1.3.1")
                 compileOnly("org.robolectric:android-all:9-robolectric-4913185-2")
             }
         }
@@ -102,6 +103,12 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
                 implementation("com.android.support.test:runner:1.0.2")
+            }
+        }
+
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:1.3.1")
             }
         }
 

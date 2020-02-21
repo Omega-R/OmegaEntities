@@ -1,8 +1,8 @@
 package com.omega_r.libs.entities.files
 
 import com.omega_r.libs.entities.OmegaEntity
-import kotlinx.io.core.Input
-import kotlinx.io.core.Output
+import io.ktor.utils.io.core.Input
+import io.ktor.utils.io.core.Output
 
 interface OmegaFile : OmegaEntity {
 
@@ -16,16 +16,16 @@ interface OmegaFile : OmegaEntity {
 
     val name: String
 
-    suspend fun isExist(holder: FileProcessorsHolder = FileProcessorsHolder.current): Boolean? = with(holder) {
-        with(getProcessor()) { exist() }
+    suspend fun isExist(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Boolean? = with(holder) {
+        with(getProcessor() as OmegaFileProcessor<OmegaFile>) { exist() }
     }
 
-    suspend fun getInput(holder: FileProcessorsHolder = FileProcessorsHolder.current): Input? = with(holder) {
-        with(getProcessor()) { input() }
+    suspend fun getInput(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Input? = with(holder) {
+        with(getProcessor() as OmegaFileProcessor<OmegaFile>) { input() }
     }
 
-    suspend fun getOutput(holder: FileProcessorsHolder = FileProcessorsHolder.current): Output? = with(holder) {
-        with(getProcessor()) { output() }
+    suspend fun getOutput(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Output? = with(holder) {
+        with(getProcessor() as OmegaFileProcessor<OmegaFile>) { output() }
     }
 
 }
