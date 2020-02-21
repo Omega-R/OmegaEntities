@@ -8,10 +8,10 @@ import com.omega_r.libs.entities.text.styled.styles.*
 
 actual object OmegaDefaultStyledTextProcessor : OmegaStyledTextProcessor {
 
-    actual override fun OmegaStyledText.extract(resourceExtractor: OmegaResourceExtractor): CharSequence? =
-        sourceText.getCharSequence()
+    actual override fun extract(entity: OmegaStyledText, resourceExtractor: OmegaResourceExtractor): CharSequence? =
+        entity.sourceText.getCharSequence(resourceExtractor)
             ?.applyStyle(
-                styles = styles,
+                styles = entity.styles,
                 extractor = resourceExtractor
             )
 
@@ -70,7 +70,7 @@ actual object OmegaDefaultStyledTextProcessor : OmegaStyledTextProcessor {
                     }
                 }
             }
-            is OmegaFontTextStyle -> setSpan(TypefaceSpan(style.fontName.getString()))
+            is OmegaFontTextStyle -> setSpan(TypefaceSpan(style.fontName.getString(extractor)))
 
         }
 

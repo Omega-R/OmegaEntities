@@ -4,7 +4,6 @@ import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import com.omega_r.libs.entities.text.fromHtmlString
 import com.omega_r.libs.entities.text.resource.OmegaResourceTextProcessor
-import com.omega_r.libs.entities.text.resource.OmegaResources.resources
 import com.omega_r.libs.entities.text.toHtmlString
 
 actual object OmegaPluralsResourceTextProcessor : OmegaResourceTextProcessor<OmegaPluralsResourceText, OmegaResource.Plurals>() {
@@ -28,7 +27,7 @@ actual object OmegaPluralsResourceTextProcessor : OmegaResourceTextProcessor<Ome
     }
 
     override fun convertFormatArg(any: Any?, resourceExtractor: OmegaResourceExtractor): Any {
-        return when (val result = super.convertFormatArg(any)) {
+        return when (val result = super.convertFormatArg(any, resourceExtractor)) {
             is CharSequence -> {
                 result.toHtmlString()
             }
