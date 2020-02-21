@@ -1,3 +1,5 @@
 package com.omega_r.libs.entities.processors
 
-interface OmegaProcessor
+import com.omega_r.libs.entities.OmegaEntity
+
+interface OmegaProcessor<T: OmegaEntity>

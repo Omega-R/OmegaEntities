@@ -1,9 +1,6 @@
-package com.omega_r.libs.entities
+package com.omega_r.libs.entities.resources
 
-import android.annotation.ArrayRes
-import android.annotation.ColorRes
-import android.annotation.PluralsRes
-import android.annotation.StringRes
+import android.annotation.*
 
 actual sealed class OmegaResource {
 
@@ -13,6 +10,8 @@ actual sealed class OmegaResource {
 
     actual data class TextArray(@ArrayRes val id: Int) : OmegaResource()
 
-    actual data class Colour(@ColorRes val id: Int) : OmegaResource()
+    actual data class Colour(@ColorRes val id: Int, val string: String) : OmegaResource()
+
+    actual data class Image(@DrawableRes val id: Int) : OmegaResource()
 
 }

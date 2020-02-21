@@ -6,9 +6,6 @@ class OmegaArrayText internal constructor(vararg val array: OmegaText) : OmegaTe
 
     constructor(list: List<OmegaText>) : this(*list.toTypedArray())
 
-    override val isEmpty: Boolean
-        get() = !array.any { !text.isEmpty }
-
     override fun plus(text: OmegaText): OmegaText {
         return OmegaArrayText(array = *arrayOf(*array, text))
     }

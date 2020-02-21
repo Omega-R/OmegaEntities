@@ -17,6 +17,10 @@ class OmegaDecorationTextStyle(vararg val styles: DecorationStyle): OmegaTextSty
         return styles.contentHashCode()
     }
 
+    override fun toString(): String {
+        return "OmegaDecorationTextStyle(styles=${styles.contentToString()})"
+    }
+
     enum class DecorationStyle {
         UNDERLINE, STRIKETHROUGH
     }

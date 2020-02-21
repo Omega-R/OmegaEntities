@@ -1,6 +1,6 @@
 package com.omega_r.libs.entities.text.resource
 
-import com.omega_r.libs.entities.OmegaResource
+import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.text.OmegaText
 
 open class OmegaResourceText<R: OmegaResource>(val resource: R, vararg val formatArgs: Any): OmegaText {

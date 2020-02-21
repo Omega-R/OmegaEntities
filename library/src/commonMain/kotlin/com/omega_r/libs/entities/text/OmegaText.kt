@@ -1,7 +1,8 @@
 package com.omega_r.libs.entities.text
 
 import com.omega_r.libs.entities.OmegaEntity
-import com.omega_r.libs.entities.OmegaResource
+import com.omega_r.libs.entities.resources.OmegaResource
+import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import com.omega_r.libs.entities.text.array.OmegaArrayText
 import com.omega_r.libs.entities.text.resource.plurals.OmegaPluralsResourceText
 import com.omega_r.libs.entities.text.resource.OmegaResourceText
@@ -48,9 +49,6 @@ interface OmegaText : OmegaEntity, OmegaTextHolder {
     override val text: OmegaText
         get() = this
 
-    val isEmpty: Boolean
-        get() = getCharSequence().isNullOrEmpty()
-
     operator fun plus(text: OmegaText): OmegaText = from(this, text)
 
     operator fun plus(holder: OmegaTextHolder): OmegaText = this + holder.text
@@ -60,15 +58,18 @@ interface OmegaText : OmegaEntity, OmegaTextHolder {
     operator fun plus(textStyle: OmegaTextStyle): OmegaText = OmegaStyledText(this, textStyle)
 
     @JvmOverloads
-    fun getString(holder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): String? =
-            getCharSequence(holder)?.toString()
+    fun getString(
+        extractor: OmegaResourceExtractor,
+        processorsHolder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current
+    ): String? = getCharSequence(extractor, processorsHolder)?.toString()
 
     @JvmOverloads
-    fun getCharSequence(holder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current): CharSequence? = with(holder) {
-        with(getProcessor() as OmegaTextProcessor<OmegaText>) {
-            extract()
-        }
-    }
+    @Suppress("UNCHECKED_CAST")
+    fun getCharSequence(
+        extractor: OmegaResourceExtractor,
+        processorsHolder: OmegaTextProcessorsHolder = OmegaTextProcessorsHolder.current
+    ): CharSequence? = processorsHolder.extract(this, extractor)
+
 }
 
 fun String.toText(): OmegaText = OmegaText.from(this)

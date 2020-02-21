@@ -1,15 +1,24 @@
 package com.omega_r.libs.entities.text
 
 import android.annotation.StringRes
+import android.content.Context
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.view.View
 import android.widget.TextView
-import com.omega_r.libs.entities.OmegaResource
+import com.omega_r.libs.entities.resources.OmegaResource
+import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 
 fun TextView.setText(text: OmegaText) {
-    this@setText.text = text.getCharSequence()
+    this@setText.text = text.getCharSequence(extractor)
 }
+
+val Context.extractor: OmegaResourceExtractor
+    get() = OmegaResourceExtractor.from(this)
+
+val View.extractor: OmegaResourceExtractor
+    get() = context.extractor
 
 fun OmegaText.Companion.from(@StringRes id: Int): OmegaText = from(OmegaResource.Text(id))
 
@@ -34,4 +43,5 @@ fun CharSequence.toHtmlString(): String {
         is Spanned -> toHtmlString()
         else -> Html.escapeHtml(this)
     }
+
 }

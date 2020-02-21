@@ -1,26 +1,24 @@
 package com.omega_r.libs.entities.processors
 
 import com.omega_r.libs.entities.OmegaEntity
+import com.omega_r.libs.entities.text.OmegaText
+import com.omega_r.libs.entities.text.OmegaTextProcessor
 import kotlin.reflect.KClass
 
-interface ProcessorsHolder<T : OmegaEntity, P : OmegaProcessor> {
+interface ProcessorsHolder<T : OmegaEntity, P : OmegaProcessor<T>> {
 
-    fun T.getProcessor(): P
+    fun getProcessor(entity: T): P
 
-    open class Default<T : OmegaEntity, P : OmegaProcessor> : ProcessorsHolder<T, P> {
+    open class Default<T : OmegaEntity, P> where P : OmegaProcessor<out T> {
 
         private val processorsMap: MutableMap<KClass<out T>, P> = mutableMapOf()
 
-        open fun addProcessors(vararg processors: Pair<KClass<out T>, P>) {
-            processors.forEach { addProcessor(it.first, it.second) }
+        open fun <TT: T, PP: OmegaProcessor<TT>> addProcessor(className: KClass<TT>, processor: PP)  {
+            @Suppress("UNCHECKED_CAST")
+            processorsMap[className] = processor as P
         }
-
-        open fun addProcessor(className: KClass<out T>, processor: P) {
-            processorsMap[className] = processor
-        }
-
-        override fun T.getProcessor(): P =
-                processorsMap[this::class] ?: throw IllegalArgumentException("Processor not found for class ${this::class}")
+        fun getProcessor(entity: T): P = processorsMap[entity::class]
+            ?: throw IllegalArgumentException("Processor not found for class ${this::class}")
 
     }
 

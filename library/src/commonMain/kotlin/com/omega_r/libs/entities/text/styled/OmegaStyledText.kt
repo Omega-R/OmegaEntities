@@ -1,15 +1,19 @@
 package com.omega_r.libs.entities.text.styled
 
 import com.omega_r.libs.entities.text.OmegaText
+import com.omega_r.libs.entities.text.styled.styles.OmegaArrayTextStyle
 import com.omega_r.libs.entities.text.styled.styles.OmegaTextStyle
 
 class OmegaStyledText(val sourceText: OmegaText, vararg val styles: OmegaTextStyle) : OmegaText {
 
-    override val isEmpty: Boolean
-        get() = sourceText.isEmpty
-
     override fun plus(textStyle: OmegaTextStyle): OmegaText {
-        val list = arrayOf(*styles, textStyle)
+        val list = when (textStyle) {
+            is OmegaArrayTextStyle -> {
+                arrayOf(*styles, *textStyle.array)
+            }
+            else -> arrayOf(*styles, textStyle)
+        }
+
         return OmegaStyledText(sourceText, *list)
     }
 

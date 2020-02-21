@@ -2,28 +2,29 @@ package com.omega_r.libs.entities.text.styled
 
 import android.graphics.Typeface
 import android.text.SpannableString
-import android.text.style.StrikethroughSpan
-import android.text.style.StyleSpan
-import android.text.style.TypefaceSpan
-import android.text.style.UnderlineSpan
-import com.omega_r.libs.entities.text.styled.styles.OmegaDecorationTextStyle
-import com.omega_r.libs.entities.text.styled.styles.OmegaFontStyleTextStyle
-import com.omega_r.libs.entities.text.styled.styles.OmegaFontTextStyle
-import com.omega_r.libs.entities.text.styled.styles.OmegaTextStyle
+import android.text.style.*
+import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import com.omega_r.libs.entities.text.styled.styles.*
 
 actual object OmegaDefaultStyledTextProcessor : OmegaStyledTextProcessor {
 
-    actual override fun OmegaStyledText.extract(): CharSequence? =
-        sourceText.getCharSequence()?.let {
-            applyStyle(it, styles = styles)
-        }
+    actual override fun OmegaStyledText.extract(resourceExtractor: OmegaResourceExtractor): CharSequence? =
+        sourceText.getCharSequence()
+            ?.applyStyle(
+                styles = styles,
+                extractor = resourceExtractor
+            )
 
-    private fun applyStyle(charSequence: CharSequence, styles: Array<out OmegaTextStyle>): CharSequence {
-        return charSequence
+
+    private fun CharSequence.applyStyle(
+        styles: Array<out OmegaTextStyle>,
+        extractor: OmegaResourceExtractor
+    ): CharSequence {
+        return this
             .getSpannableString()
             .apply {
                 styles.forEach {
-                    applyStyle(it)
+                    applyStyle(it, extractor)
                 }
             }
 
@@ -34,8 +35,20 @@ actual object OmegaDefaultStyledTextProcessor : OmegaStyledTextProcessor {
         return SpannableString(this)
     }
 
-    private fun SpannableString.applyStyle(style: OmegaTextStyle): SpannableString {
+    private fun SpannableString.applyStyle(
+        style: OmegaTextStyle,
+        extractor: OmegaResourceExtractor
+    ): SpannableString {
         when (style) {
+            is OmegaArrayTextStyle -> {
+                style.array.forEach { applyStyle(it, extractor) }
+            }
+
+            is OmegaColorTextStyle -> {
+                val colorInt = style.color.getColorInt(extractor = extractor)
+                setSpan(ForegroundColorSpan(colorInt))
+            }
+
             is OmegaDecorationTextStyle -> {
                 style.styles.forEach {
                     when (it) {

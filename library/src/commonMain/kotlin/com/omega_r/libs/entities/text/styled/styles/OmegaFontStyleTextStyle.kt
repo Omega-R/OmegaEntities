@@ -17,6 +17,10 @@ class OmegaFontStyleTextStyle(vararg val styles: Style): OmegaTextStyle {
         return styles.contentHashCode()
     }
 
+    override fun toString(): String {
+        return "OmegaFontStyleTextStyle(styles=${styles.contentToString()})"
+    }
+
     enum class Style {
         BOLD, ITALIC
     }

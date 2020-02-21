@@ -1,4 +1,4 @@
-package com.omega_r.libs.entities
+package com.omega_r.libs.entities.resources
 
 expect sealed class OmegaResource {
 
@@ -9,5 +9,7 @@ expect sealed class OmegaResource {
     class TextArray: OmegaResource
 
     class Colour: OmegaResource
+
+    class Image: OmegaResource
 
 }

@@ -1,24 +1,22 @@
 package com.omega_r.libs.entities.text.resource.text
 
-import com.omega_r.libs.entities.OmegaResource
+import com.omega_r.libs.entities.resources.OmegaResource
+import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import com.omega_r.libs.entities.text.fromHtmlString
 import com.omega_r.libs.entities.text.resource.OmegaResourceTextProcessor
-import com.omega_r.libs.entities.text.resource.OmegaResources.resources
 import com.omega_r.libs.entities.text.toHtmlString
 
 actual object OmegaTextResourceTextProcessor : OmegaResourceTextProcessor<OmegaTextResourceText, OmegaResource.Text>() {
 
-    @Suppress("UNCHECKED_CAST")
-    override fun extract(entity: OmegaTextResourceText): CharSequence? {
-        return resources.getText(entity.resource.id)
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun extractWithArgs(entity: OmegaTextResourceText, formatArgs: Array<out Any>): CharSequence? {
+    override fun extractWithArgs(
+        entity: OmegaTextResourceText,
+        formatArgs: Array<out Any>,
+        resourceExtractor: OmegaResourceExtractor
+    ): CharSequence? {
         // Next, get the format string, and do the same to that.
-        val sourceHtmlString = resources
-            .getText(entity.resource.id)
-            .toHtmlString()
+        val sourceHtmlString = resourceExtractor
+            .getCharSequence(entity.resource)
+            ?.toHtmlString() ?: return null
 
         // Now apply the String.format
         val formattedHtmlString = String.format(sourceHtmlString, *formatArgs)
@@ -27,8 +25,8 @@ actual object OmegaTextResourceTextProcessor : OmegaResourceTextProcessor<OmegaT
         return formattedHtmlString.fromHtmlString()
     }
 
-    override fun convertFormatArg(any: Any?): Any {
-        return when (val result = super.convertFormatArg(any)) {
+    override fun convertFormatArg(any: Any?, resourceExtractor: OmegaResourceExtractor): Any {
+        return when (val result = super.convertFormatArg(any, resourceExtractor)) {
             is CharSequence -> {
                 result.toHtmlString()
             }
