@@ -8,7 +8,7 @@ expect sealed class OmegaResource {
 
     class TextArray: OmegaResource
 
-    class Colour: OmegaResource
+    class Color: OmegaResource
 
     class Image: OmegaResource
 

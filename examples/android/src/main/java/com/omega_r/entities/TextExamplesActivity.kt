@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.omega_r.libs.entities.text.OmegaText
 import com.omega_r.libs.entities.text.from
 import com.omega_r.libs.entities.text.setText
+import com.omega_r.libs.entities.text.styled.styles.OmegaFontStyleTextStyle
 import com.omega_r.libs.entities.text.styled.styles.OmegaTextStyle
-import com.omega_r.libs.entities.text.styles.bold
-import com.omega_r.libs.entities.text.styles.boldItalic
-import com.omega_r.libs.entities.text.styles.underline
 import kotlinx.android.synthetic.main.activity_text_examples.*
 
 class TextExamplesActivity : AppCompatActivity() {
@@ -30,12 +28,7 @@ class TextExamplesActivity : AppCompatActivity() {
         adapter.setItems(
                 listOf(
                         OmegaText.from("Text from String") to OmegaText.from("String Example")
-                                .plus(
-                                    OmegaTextStyle.from(
-                                        OmegaTextStyle.Companion.underline(),
-                                        OmegaTextStyle.Companion.bold(),
-                                        OmegaTextStyle.Companion.boldItalic()
-                                )),
+                                .plus(OmegaTextStyle.from(OmegaFontStyleTextStyle.Style.BOLD)),
                         OmegaText.from("Text from Resource") to OmegaText.from(R.string.app_name)
                 )
         )

@@ -2,6 +2,7 @@ package com.omega_r.libs.entities.resources
 
 import android.annotation.ColorInt
 import android.app.ActivityThread
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -30,6 +31,9 @@ actual open class OmegaResourceExtractor {
     protected open val context: Context?
         get() = contextReference.get()
 
+    val contentResolver: ContentResolver?
+        get() = context?.contentResolver
+
     actual open fun getCharSequence(resource: OmegaResource.Text): CharSequence? = context?.getText(resource.id)
 
     actual open fun getPluralsChatSequence(resource: OmegaResource.Plurals, quantity: Int): CharSequence? {
@@ -41,7 +45,7 @@ actual open class OmegaResourceExtractor {
     }
 
     @ColorInt
-    actual open fun getColorInt(resource: OmegaResource.Colour): Int {
+    actual open fun getColorInt(resource: OmegaResource.Color): Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context?.getColor(resource.id) ?: 0
         } else {
@@ -64,7 +68,7 @@ actual open class OmegaResourceExtractor {
 
     }
 
-    private class Local(context: Context): OmegaResourceExtractor() {
+    private class Local(context: Context) : OmegaResourceExtractor() {
 
         init {
             contextReference = WeakReference(context)

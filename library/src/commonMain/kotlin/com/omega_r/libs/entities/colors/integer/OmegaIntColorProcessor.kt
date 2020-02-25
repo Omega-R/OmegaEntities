@@ -6,6 +6,6 @@ import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 
 object OmegaIntColorProcessor : OmegaColorProcessor<OmegaIntColor> {
 
-    override fun OmegaIntColor.getColorInt(extractor: OmegaResourceExtractor) = colorInt
+    override fun getColorInt(entity: OmegaIntColor, extractor: OmegaResourceExtractor): Int = entity.colorInt
 
 }

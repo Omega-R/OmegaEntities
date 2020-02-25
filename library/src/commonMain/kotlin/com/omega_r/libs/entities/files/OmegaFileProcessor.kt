@@ -4,7 +4,7 @@ import com.omega_r.libs.entities.processors.OmegaProcessor
 import io.ktor.utils.io.core.Input
 import io.ktor.utils.io.core.Output
 
-interface OmegaFileProcessor<T : OmegaFile> : OmegaProcessor {
+interface OmegaFileProcessor<T : OmegaFile> : OmegaProcessor<T> {
 
     suspend fun T.exist(): Boolean? = null
 

@@ -1,18 +1,20 @@
 package com.omega_r.libs.entities.images
 
-import android.content.Context
 import android.graphics.Bitmap
-import com.omega_r.libs.entities.extensions.toInputStream
-import io.ktor.utils.io.core.Input
-import io.ktor.utils.io.streams.asInput
+import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 
 data class OmegaBitmapImage(val bitmap: Bitmap) : BaseBitmapImage() {
 
+    companion object {
+        init {
+            OmegaImageProcessorsHolder.Default.addProcessor(OmegaBitmapImage::class, Processor())
+        }
+    }
+
     class Processor : BaseBitmapImage.Processor<OmegaBitmapImage>(false) {
 
-        override suspend fun OmegaBitmapImage.input(): Input? = bitmap.toInputStream().asInput()
-
-        override suspend fun OmegaBitmapImage.getBitmap(context: Context, width: Int?, height: Int?): Bitmap? = bitmap
+        override suspend fun OmegaBitmapImage.getBitmap(extractor: OmegaResourceExtractor, width: Int?, height: Int?): Bitmap? =
+                bitmap
 
     }
 

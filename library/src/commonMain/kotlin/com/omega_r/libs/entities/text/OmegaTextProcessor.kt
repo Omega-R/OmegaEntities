@@ -5,6 +5,6 @@ import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 
 interface OmegaTextProcessor<T : OmegaText> : OmegaProcessor<T> {
 
-    fun extract(entity: T, resourceExtractor: OmegaResourceExtractor): CharSequence?
+    fun extract(entity: T, extractor: OmegaResourceExtractor): CharSequence?
 
 }

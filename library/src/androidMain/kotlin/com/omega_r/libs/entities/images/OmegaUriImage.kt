@@ -1,35 +1,37 @@
 package com.omega_r.libs.entities.images
 
 import android.content.ContentResolver
-import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
-import android.view.View
-import android.widget.ImageView
-import io.ktor.utils.io.core.Input
-import io.ktor.utils.io.streams.asInput
-import java.io.FileNotFoundException
+import com.omega_r.libs.entities.decoders.toBitmap
+import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import java.io.InputStream
 
-data class OmegaUriImage(val uri: Uri) : OmegaImage {
+data class OmegaUriImage(val uri: Uri) : BaseBitmapImage(), OmegaImage {
 
-    class OmegaUriImageProcessor(private val contentResolver: ContentResolver) : OmegaImageProcessor<OmegaUriImage> {
+    companion object {
+        init {
+            OmegaImageProcessorsHolder.Default.addProcessor(OmegaUriImage::class, Processor())
+        }
+    }
 
-        constructor(context: Context): this(context.contentResolver)
+    class Processor : BaseBitmapImage.Processor<OmegaUriImage>(true) {
 
-        override suspend fun OmegaUriImage.input(): Input? {
-            return try {
-                contentResolver.openInputStream(uri).asInput()
-            } catch (exc: FileNotFoundException) {
-                null
+        override suspend fun OmegaUriImage.getBitmap(extractor: OmegaResourceExtractor, width: Int?, height: Int?): Bitmap? {
+            when (val scheme = uri.scheme) {
+                ContentResolver.SCHEME_ANDROID_RESOURCE, ContentResolver.SCHEME_FILE, ContentResolver.SCHEME_CONTENT -> {
+                    val stream = extractor.contentResolver?.openInputStream(uri) ?: return null
+                    return stream.toBitmap(width, height)
+                }
+                else -> throw IllegalArgumentException("Not supported uri scheme = $scheme")
             }
         }
 
-        override fun OmegaUriImage.applyImage(imageView: ImageView, placeholderResId: Int) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun OmegaUriImage.applyBackground(view: View, placeholderResId: Int) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
+        override suspend fun OmegaUriImage.getInputStream(
+                extractor: OmegaResourceExtractor,
+                format: OmegaImage.Format,
+                quality: Int
+        ): InputStream? = extractor.contentResolver?.openInputStream(uri)
 
     }
 

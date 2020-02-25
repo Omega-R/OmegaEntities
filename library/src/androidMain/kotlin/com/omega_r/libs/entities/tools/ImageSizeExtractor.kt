@@ -1,17 +1,17 @@
 package com.omega_r.libs.entities.tools
 
 import android.view.View
-import android.view.ViewTreeObserver
+import android.view.View.OnAttachStateChangeListener
+import android.view.ViewTreeObserver.OnPreDrawListener
 import java.lang.ref.WeakReference
 import java.util.*
 
-class ImageSizeExtractor<V : View>(target: V, callback: suspend (view: V) -> Unit) : ViewTreeObserver.OnPreDrawListener,
-        View.OnAttachStateChangeListener {
+class ImageSizeExtractor<V : View>(target: V, callback: suspend (view: V) -> Unit) : OnPreDrawListener,
+        OnAttachStateChangeListener {
 
     companion object {
 
         private val imageSizeExtractors = WeakHashMap<View, ImageSizeExtractor<*>>()
-
 
     }
 

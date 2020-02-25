@@ -2,7 +2,7 @@ package com.omega_r.libs.entities.images
 
 import com.omega_r.libs.entities.processors.ProcessorsHolder
 
-interface OmegaImageProcessorsHolder : ProcessorsHolder<OmegaImage, OmegaImageProcessor<out OmegaImage>> {
+interface OmegaImageProcessorsHolder : ProcessorsHolder<OmegaImage, OmegaImageProcessor<OmegaImage>> {
 
     companion object {
 
@@ -10,6 +10,6 @@ interface OmegaImageProcessorsHolder : ProcessorsHolder<OmegaImage, OmegaImagePr
 
     }
 
-    object Default : ProcessorsHolder.Default<OmegaImage, OmegaImageProcessor<out OmegaImage>>(), OmegaImageProcessorsHolder
+    object Default : ProcessorsHolder.Default<OmegaImage, OmegaImageProcessor<OmegaImage>>(), OmegaImageProcessorsHolder
 
 }

@@ -17,7 +17,7 @@ actual open class OmegaResourceExtractor {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    actual fun getColorInt(resource: OmegaResource.Colour): Int {
+    actual fun getColorInt(resource: OmegaResource.Color): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

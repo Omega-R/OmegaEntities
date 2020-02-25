@@ -8,7 +8,7 @@ actual sealed class OmegaResource {
 
     actual data class TextArray(val id: String) : OmegaResource()
 
-    actual data class Colour(val id: String) : OmegaResource()
+    actual data class Color(val id: String) : OmegaResource()
 
     actual data class Image(val id: String) : OmegaResource()
 

@@ -8,7 +8,7 @@ expect open class OmegaResourceExtractor {
 
     fun getCharSequenceArray(resource: OmegaResource.TextArray): Array<CharSequence>
 
-    fun getColorInt(resource: OmegaResource.Colour): Int
+    fun getColorInt(resource: OmegaResource.Color): Int
 
     object Default: OmegaResourceExtractor
 

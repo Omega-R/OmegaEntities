@@ -5,8 +5,8 @@ import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 
 object OmegaArgbColorProcessor : OmegaColorProcessor<OmegaArgbColor> {
 
-    override fun OmegaArgbColor.getColorInt(extractor: OmegaResourceExtractor): Int {
-        return (alpha shl 24) or (red shl 16) or (green shl 8) or blue
+    override fun getColorInt(entity: OmegaArgbColor, extractor: OmegaResourceExtractor): Int {
+        return (entity.alpha shl 24) or (entity.red shl 16) or (entity.green shl 8) or entity.blue
     }
 
 }

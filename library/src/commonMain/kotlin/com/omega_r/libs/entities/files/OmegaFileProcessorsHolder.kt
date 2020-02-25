@@ -2,7 +2,7 @@ package com.omega_r.libs.entities.files
 
 import com.omega_r.libs.entities.processors.ProcessorsHolder
 
-interface OmegaFileProcessorsHolder : ProcessorsHolder<OmegaFile, OmegaFileProcessor<out OmegaFile>> {
+interface OmegaFileProcessorsHolder : ProcessorsHolder<OmegaFile, OmegaFileProcessor<OmegaFile>> {
 
     companion object {
 
@@ -10,6 +10,6 @@ interface OmegaFileProcessorsHolder : ProcessorsHolder<OmegaFile, OmegaFileProce
 
     }
 
-    object Default : ProcessorsHolder.Default<OmegaFile, OmegaFileProcessor<out OmegaFile>>(), OmegaFileProcessorsHolder
+    object Default : ProcessorsHolder.Default<OmegaFile, OmegaFileProcessor<OmegaFile>>(), OmegaFileProcessorsHolder
 
 }

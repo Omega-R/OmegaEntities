@@ -16,16 +16,22 @@ interface OmegaFile : OmegaEntity {
 
     val name: String
 
-    suspend fun isExist(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Boolean? = with(holder) {
-        with(getProcessor() as OmegaFileProcessor<OmegaFile>) { exist() }
+    suspend fun isExist(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Boolean? {
+        return with(holder.getProcessor(this)) {
+            exist()
+        }
     }
 
-    suspend fun getInput(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Input? = with(holder) {
-        with(getProcessor() as OmegaFileProcessor<OmegaFile>) { input() }
+    suspend fun getInput(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Input? {
+        return with(holder.getProcessor(this)) {
+            input()
+        }
     }
 
-    suspend fun getOutput(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Output? = with(holder) {
-        with(getProcessor() as OmegaFileProcessor<OmegaFile>) { output() }
+    suspend fun getOutput(holder: OmegaFileProcessorsHolder = OmegaFileProcessorsHolder.current): Output? {
+        return with(holder.getProcessor(this)) {
+            output()
+        }
     }
 
 }

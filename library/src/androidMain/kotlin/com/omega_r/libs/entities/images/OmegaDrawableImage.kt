@@ -1,32 +1,44 @@
 package com.omega_r.libs.entities.images
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
-import io.ktor.utils.io.core.Input
+import com.omega_r.libs.entities.extensions.toBitmapAndRecycle
+import com.omega_r.libs.entities.extensions.toInputStream
+import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import java.io.InputStream
 
-data class OmegaDrawableImage(val drawable: Drawable) : OmegaImage {
+data class OmegaDrawableImage(val drawable: Drawable) : BaseBitmapImage(), OmegaImage {
+
+    companion object {
+        init {
+            OmegaImageProcessorsHolder.Default.addProcessor(OmegaDrawableImage::class, Processor())
+        }
+    }
 
     class Processor : OmegaBaseImageProcessor<OmegaDrawableImage>() {
 
-        override suspend fun OmegaDrawableImage.getStream(context: Context, compressFormat: Bitmap.CompressFormat, quality: Int): InputStream? {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        override fun OmegaDrawableImage.applyImageInner(
+                imageView: ImageView,
+                placeholderResId: Int,
+                extractor: OmegaResourceExtractor
+        ) {
+            imageView.setImageDrawable(drawable)
         }
 
-        override fun OmegaDrawableImage.applyImageInner(imageView: ImageView, placeholderResId: Int) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        override fun OmegaDrawableImage.applyBackgroundInner(
+                view: View,
+                placeholderResId: Int,
+                extractor: OmegaResourceExtractor
+        ) {
+            OmegaImageProcessor.applyBackground(view, drawable)
         }
 
-        override fun OmegaDrawableImage.applyBackgroundInner(view: View, placeholderResId: Int) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override suspend fun OmegaDrawableImage.input(): Input? {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
+        override suspend fun OmegaDrawableImage.getInputStream(
+                extractor: OmegaResourceExtractor,
+                format: OmegaImage.Format,
+                quality: Int
+        ): InputStream? = drawable.toBitmapAndRecycle { toInputStream(format, quality) }
 
     }
 

@@ -37,7 +37,7 @@ interface OmegaColor : OmegaEntity {
 
         fun fromInt(colorInt: Int) = OmegaIntColor(colorInt)
 
-        fun fromResource(resource: OmegaResource.Colour) = OmegaResourceColor(resource)
+        fun fromResource(resource: OmegaResource.Color) = OmegaResourceColor(resource)
 
         fun fromHex(hex: String) = OmegaHexColor(hex)
 
@@ -51,8 +51,6 @@ interface OmegaColor : OmegaEntity {
     fun getColorInt(
         holder: OmegaColorProcessorsHolder = OmegaColorProcessorsHolder.current,
         extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
-    ): Int {
-        return holder.getProcessor(this).getColorInt(this)
-    }
+    ): Int = holder.getProcessor(this).getColorInt(this, extractor)
 
 }

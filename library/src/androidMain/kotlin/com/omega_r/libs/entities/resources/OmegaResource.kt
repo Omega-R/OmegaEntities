@@ -10,7 +10,7 @@ actual sealed class OmegaResource {
 
     actual data class TextArray(@ArrayRes val id: Int) : OmegaResource()
 
-    actual data class Colour(@ColorRes val id: Int, val string: String) : OmegaResource()
+    actual data class Color(@ColorRes val id: Int, val string: String) : OmegaResource()
 
     actual data class Image(@DrawableRes val id: Int) : OmegaResource()
 

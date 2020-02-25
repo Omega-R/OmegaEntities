@@ -6,10 +6,10 @@ import com.omega_r.libs.entities.text.OmegaTextProcessor
 
 actual object OmegaArrayTextProcessor : OmegaTextProcessor<OmegaArrayText> {
 
-    override fun extract(entity: OmegaArrayText, resourceExtractor: OmegaResourceExtractor): CharSequence? {
+    override fun extract(entity: OmegaArrayText, extractor: OmegaResourceExtractor): CharSequence? {
         val builder = SpannableStringBuilder()
         entity.array.forEach { omegaText ->
-            omegaText.getCharSequence()?.let { charSequence ->
+            omegaText.getCharSequence(extractor)?.let { charSequence ->
                 builder.append(charSequence)
             }
         }

@@ -11,14 +11,14 @@ abstract class OmegaResourceTextProcessor<T : OmegaResourceText<R>, R : OmegaRes
         private const val EMPTY = ""
     }
 
-    override fun extract(entity: T, resourceExtractor: OmegaResourceExtractor): CharSequence? {
-        return if (entity.formatArgs.isEmpty()) extractWithoutArgs(entity, resourceExtractor) else {
+    override fun extract(entity: T, extractor: OmegaResourceExtractor): CharSequence? {
+        return if (entity.formatArgs.isEmpty()) extractWithoutArgs(entity, extractor) else {
             val formattedArray = entity.formatArgs
                 .map {
-                    convertFormatArg(it, resourceExtractor)
+                    convertFormatArg(it, extractor)
                 }
                 .toTypedArray()
-            extractWithArgs(entity, formattedArray, resourceExtractor)
+            extractWithArgs(entity, formattedArray, extractor)
         }
     }
 
