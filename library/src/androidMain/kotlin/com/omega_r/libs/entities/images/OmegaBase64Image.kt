@@ -20,17 +20,19 @@ actual class OmegaBase64Image(actual val base64String: String, val flags: Int) :
 
     class Processor : BaseBitmapImage.Processor<OmegaBase64Image>(true), OmegaProcessor<OmegaBase64Image> {
 
-        override suspend fun OmegaBase64Image.getInputStream(
-                extractor: OmegaResourceExtractor,
-                format: OmegaImage.Format,
-                quality: Int
-        ): InputStream? = toByteArray()?.let { ByteArrayInputStream(it) }
-
-        override suspend fun OmegaBase64Image.getBitmap(
+        override suspend fun getBitmap(
+                entity: OmegaBase64Image,
                 extractor: OmegaResourceExtractor,
                 width: Int?,
                 height: Int?
-        ): Bitmap? = toByteArray()?.toBitmap(width, height)
+        ): Bitmap? = entity.toByteArray()?.toBitmap(width, height)
+
+        override suspend fun getInputStream(
+                entity: OmegaBase64Image,
+                extractor: OmegaResourceExtractor,
+                format: OmegaImage.Format,
+                quality: Int
+        ): InputStream? = entity.toByteArray()?.let { ByteArrayInputStream(it) }
 
         private fun OmegaBase64Image.toByteArray(): ByteArray? {
             val base64String = base64String

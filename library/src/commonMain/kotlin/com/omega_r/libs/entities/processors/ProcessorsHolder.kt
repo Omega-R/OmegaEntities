@@ -18,7 +18,7 @@ interface ProcessorsHolder<T : OmegaEntity, P : OmegaProcessor<T>> {
             processorsMap[className] = processor as P
         }
         fun getProcessor(entity: T): P = processorsMap[entity::class]
-            ?: throw IllegalArgumentException("Processor not found for class ${this::class}")
+            ?: throw IllegalArgumentException("Processor not found for class ${entity::class}")
 
     }
 

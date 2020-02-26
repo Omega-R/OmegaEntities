@@ -1,12 +1,10 @@
 package com.omega_r.libs.entities.text.resource.plurals
 
-import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import com.omega_r.libs.entities.text.fromHtmlString
-import com.omega_r.libs.entities.text.resource.OmegaResourceTextProcessor
 import com.omega_r.libs.entities.text.toHtmlString
 
-actual object OmegaPluralsResourceTextProcessor : OmegaResourceTextProcessor<OmegaPluralsResourceText, OmegaResource.Plurals>() {
+actual object OmegaPluralsResourceTextProcessor : OmegaBaseTextResourceTextProcessor() {
 
      @Suppress("UNCHECKED_CAST")
     override fun extractWithArgs(

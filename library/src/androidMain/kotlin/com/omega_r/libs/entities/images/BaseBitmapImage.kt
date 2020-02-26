@@ -22,13 +22,14 @@ abstract class BaseBitmapImage : OmegaImage {
 
     abstract class Processor<B : BaseBitmapImage>(private val autoRecycle: Boolean) : OmegaBaseImageProcessor<B>(), OmegaImageProcessor<B> {
 
-        protected abstract suspend fun B.getBitmap(
+        protected abstract suspend fun getBitmap(
+                entity: B,
                 extractor: OmegaResourceExtractor,
                 width: Int? = null,
                 height: Int? = null
         ): Bitmap?
 
-        override fun B.applyImageInner(imageView: ImageView, placeholderResId: Int, extractor: OmegaResourceExtractor) {
+        override fun applyImageInner(entity: B, imageView: ImageView, placeholderResId: Int, extractor: OmegaResourceExtractor) {
             if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) {
                 imageView.setImageDrawable(null)
             } else {
@@ -40,19 +41,19 @@ abstract class BaseBitmapImage : OmegaImage {
 
             if (width <= 0 || height <= 0) {
                 ImageSizeExtractor(imageView) { target ->
-                    applyImageInner(target, placeholderResId, extractor)
+                    applyImageInner(entity, target, placeholderResId, extractor)
                 }
             } else {
                 val imageScaleType = imageView.scaleType
                 executeImageAsync(imageView, {
-                    getBitmap(extractor, width, height)?.run {
+                    getBitmap(entity, extractor, width, height)?.run {
                         getScaledBitmap(width, height, imageScaleType, autoRecycle, this)
                     }
                 }, ImageView::setImageBitmap)
             }
         }
 
-        override fun B.applyBackgroundInner(view: View, placeholderResId: Int, extractor: OmegaResourceExtractor) {
+        override fun applyBackgroundInner(entity: B, view: View, placeholderResId: Int, extractor: OmegaResourceExtractor) {
             if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) {
                 view.background = null
             } else {
@@ -60,9 +61,9 @@ abstract class BaseBitmapImage : OmegaImage {
             }
 
             val viewWeak = WeakReference(view)
-            val processor = OmegaImageProcessorsHolder.current.getProcessor(this)
+            val processor = OmegaImageProcessorsHolder.current.getProcessor(entity)
             processor.launch {
-                val bitmap = getBitmap(extractor)
+                val bitmap = getBitmap(entity, extractor)
                 withContext(Dispatchers.Main) {
                     viewWeak.get()?.let { view ->
                         applyBackground(view, bitmap?.let { BitmapDrawable(view.resources, it) })
@@ -71,8 +72,8 @@ abstract class BaseBitmapImage : OmegaImage {
             }
         }
 
-        override suspend fun B.getInputStream(extractor: OmegaResourceExtractor, format: OmegaImage.Format, quality: Int): InputStream? {
-            val bitmap = getBitmap(extractor)
+        override suspend fun getInputStream(entity: B, extractor: OmegaResourceExtractor, format: OmegaImage.Format, quality: Int): InputStream? {
+            val bitmap = getBitmap(entity, extractor)
             try {
                 return bitmap.toInputStream(format, quality)
             } finally {

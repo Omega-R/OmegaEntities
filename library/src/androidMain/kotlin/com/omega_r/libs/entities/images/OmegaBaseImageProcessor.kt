@@ -15,48 +15,51 @@ abstract class OmegaBaseImageProcessor<I : OmegaImage> : OmegaImageProcessor<I> 
 
     override val coroutineContext: CoroutineContext = Dispatchers.Default
 
-    override fun I.applyImage(imageView: ImageView, placeholderResId: Int, extractor: OmegaResourceExtractor) {
-        val newPlaceholderResId = imageView.getDefaultPlaceholderResId(placeholderResId)
-        applyImageInner(imageView, newPlaceholderResId, extractor)
+    override fun applyImage(entity: I, imageView: ImageView, placeholderResId: Int, extractor: OmegaResourceExtractor) {
+        val newPlaceholderResId = imageView.getDefaultPlaceholderResId(placeholderResId, extractor)
+        applyImageInner(entity, imageView, newPlaceholderResId, extractor)
     }
 
-    override fun I.applyBackground(view: View, placeholderResId: Int, extractor: OmegaResourceExtractor) {
-        val newPlaceholderResId = view.getDefaultPlaceholderResId(placeholderResId)
-        applyBackgroundInner(view, newPlaceholderResId, extractor)
+    override fun applyBackground(entity: I, view: View, placeholderResId: Int, extractor: OmegaResourceExtractor) {
+        val newPlaceholderResId = view.getDefaultPlaceholderResId(placeholderResId, extractor)
+        applyBackgroundInner(entity, view, newPlaceholderResId, extractor)
     }
 
-    protected abstract fun I.applyImageInner(
+    protected abstract fun applyImageInner(
+            entity: I,
             imageView: ImageView,
             placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
             extractor: OmegaResourceExtractor
     )
 
-    protected abstract fun I.applyBackgroundInner(
+    protected abstract fun applyBackgroundInner(
+            entity: I,
             view: View,
             placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
             extractor: OmegaResourceExtractor
     )
 
-    protected open fun View.getDefaultPlaceholderResId(placeholderResId: Int): Int {
-        return if (placeholderResId != OmegaImage.NO_PLACEHOLDER_RES) {
-            placeholderResId
+    protected open fun View.getDefaultPlaceholderResId(placeholderResId: Int, extractor: OmegaResourceExtractor): Int {
+        return if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) {
+            OmegaImage.NO_PLACEHOLDER_RES
         } else {
-            0
-            // TODO
-//            TypedValue().run {
-//                if (context.theme.resolveAttribute(R.attr.omegaTypePlaceholderDefault, this, true)) data else {
-//                    OmegaImage.NO_PLACEHOLDER_RES
-//                }
-//            }
+
+//            extractor.resolveAttribute(R.attr.omegaTypePlaceholderDefault) ?: OmegaImage.NO_PLACEHOLDER_RES
+            placeholderResId
         }
     }
 
-    override suspend fun I.input(extractor: OmegaResourceExtractor, format: Format, quality: Int): Input? =
-            getInputStream(extractor, format, quality)?.asInput()
+    override suspend fun getInput(entity: I, extractor: OmegaResourceExtractor, format: Format, quality: Int): Input? =
+            getInputStream(entity, extractor, format, quality)?.asInput()
 
-    protected abstract suspend fun I.getInputStream(extractor: OmegaResourceExtractor, format: Format, quality: Int): InputStream?
+    protected abstract suspend fun getInputStream(
+            entity: I,
+            extractor: OmegaResourceExtractor,
+            format: Format,
+            quality: Int
+    ): InputStream?
 
-    override fun I.preload(extractor: OmegaResourceExtractor) {
+    override fun preload(entity: I, extractor: OmegaResourceExtractor) {
         // nothing
     }
 

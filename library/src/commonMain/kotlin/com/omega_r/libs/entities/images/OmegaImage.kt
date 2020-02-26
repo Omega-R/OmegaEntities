@@ -11,8 +11,6 @@ interface OmegaImage : OmegaEntity {
 
         fun from(url: String): OmegaImage = OmegaUrlImage(url)
 
-        fun from(resource: OmegaResource.Image): OmegaImage = OmegaResourceImage(resource)
-
     }
 
     suspend fun getInput(
@@ -20,9 +18,7 @@ interface OmegaImage : OmegaEntity {
             extractor: OmegaResourceExtractor,
             format: Format = Format.JPEG,
             quality: Int = 100
-    ): Input? = with(holder.getProcessor(this)) {
-        input(extractor, format, quality)
-    }
+    ): Input? = holder.getProcessor(this).getInput(this, extractor, format, quality)
 
     enum class Format {
 

@@ -4,6 +4,7 @@ import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import com.omega_r.libs.entities.text.OmegaText
 import com.omega_r.libs.entities.text.OmegaTextProcessor
+import com.omega_r.libs.entities.text.resource.plurals.OmegaPluralsResourceText
 
 abstract class OmegaResourceTextProcessor<T : OmegaResourceText<R>, R : OmegaResource> : OmegaTextProcessor<T> {
 
@@ -22,9 +23,7 @@ abstract class OmegaResourceTextProcessor<T : OmegaResourceText<R>, R : OmegaRes
         }
     }
 
-    protected open fun extractWithoutArgs(entity: T, extractor: OmegaResourceExtractor): CharSequence? {
-        return entity.getCharSequence(extractor)
-    }
+    protected abstract fun extractWithoutArgs(entity: T, extractor: OmegaResourceExtractor): CharSequence?
 
     protected abstract fun extractWithArgs(
         entity: T,

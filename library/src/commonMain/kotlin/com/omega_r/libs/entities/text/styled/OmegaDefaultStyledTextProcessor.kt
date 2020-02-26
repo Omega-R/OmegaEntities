@@ -1,6 +1,5 @@
 package com.omega_r.libs.entities.text.styled
 
-import com.omega_r.libs.entities.OmegaEntity
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 
 expect object OmegaDefaultStyledTextProcessor : OmegaStyledTextProcessor {

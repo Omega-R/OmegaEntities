@@ -17,17 +17,19 @@ data class OmegaJavaFileImage(val file: File) : BaseBitmapImage(), OmegaImage {
 
     class Processor : BaseBitmapImage.Processor<OmegaJavaFileImage>(true) {
 
-        override suspend fun OmegaJavaFileImage.getBitmap(
+        override suspend fun getBitmap(
+                entity: OmegaJavaFileImage,
                 extractor: OmegaResourceExtractor,
                 width: Int?,
                 height: Int?
-        ): Bitmap? = file.toBitmap(width, height)
+        ): Bitmap? = entity.file.toBitmap(width, height)
 
-        override suspend fun OmegaJavaFileImage.getInputStream(
+        override suspend fun getInputStream(
+                entity: OmegaJavaFileImage,
                 extractor: OmegaResourceExtractor,
                 format: OmegaImage.Format,
                 quality: Int
-        ): InputStream? = FileInputStream(file)
+        ): InputStream? = FileInputStream(entity.file)
 
     }
 

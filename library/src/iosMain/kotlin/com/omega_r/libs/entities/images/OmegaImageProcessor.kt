@@ -5,6 +5,6 @@ import io.ktor.utils.io.core.Input
 
 actual interface OmegaImageProcessor<T : OmegaImage> : OmegaProcessor {
 
-    actual suspend fun T.input(): Input?
+    actual suspend fun T.getInput(): Input?
 
 }

@@ -13,11 +13,12 @@ data class OmegaUrlImage(val url: String) : OmegaImage {
 
         constructor() : this(HttpClient { /* nothing */ })
 
-        override suspend fun OmegaUrlImage.input(
+        override suspend fun getInput(
+                entity: OmegaUrlImage,
                 extractor: OmegaResourceExtractor,
                 format: OmegaImage.Format,
                 quality: Int
-        ): Input? = client.request<ByteArray>(Url(url)) {
+        ): Input? = client.request<ByteArray>(Url(entity.url)) {
             /* nothing */
         }.asInput()
 

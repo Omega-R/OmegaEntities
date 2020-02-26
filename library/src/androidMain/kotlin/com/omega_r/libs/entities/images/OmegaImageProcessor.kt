@@ -40,24 +40,27 @@ actual interface OmegaImageProcessor<T : OmegaImage> : OmegaProcessor<T>, Corout
 
     }
 
-    actual suspend fun T.input(
+    actual suspend fun getInput(
+            entity: T,
             extractor: OmegaResourceExtractor,
             format: OmegaImage.Format,
             quality: Int
     ): Input?
 
-    fun T.applyImage(
+    fun applyImage(
+            entity: T,
             imageView: ImageView,
             placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
             extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
     )
 
-    fun T.applyBackground(
+    fun applyBackground(
+            entity: T,
             view: View,
             placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
             extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
     )
 
-    fun T.preload(extractor: OmegaResourceExtractor)
+    fun preload(entity: T, extractor: OmegaResourceExtractor)
 
 }

@@ -18,27 +18,30 @@ data class OmegaDrawableImage(val drawable: Drawable) : BaseBitmapImage(), Omega
 
     class Processor : OmegaBaseImageProcessor<OmegaDrawableImage>() {
 
-        override fun OmegaDrawableImage.applyImageInner(
+        override fun applyImageInner(
+                entity: OmegaDrawableImage,
                 imageView: ImageView,
                 placeholderResId: Int,
                 extractor: OmegaResourceExtractor
         ) {
-            imageView.setImageDrawable(drawable)
+            imageView.setImageDrawable(entity.drawable)
         }
 
-        override fun OmegaDrawableImage.applyBackgroundInner(
+        override fun applyBackgroundInner(
+                entity: OmegaDrawableImage,
                 view: View,
                 placeholderResId: Int,
                 extractor: OmegaResourceExtractor
         ) {
-            OmegaImageProcessor.applyBackground(view, drawable)
+            OmegaImageProcessor.applyBackground(view, entity.drawable)
         }
 
-        override suspend fun OmegaDrawableImage.getInputStream(
+        override suspend fun getInputStream(
+                entity: OmegaDrawableImage,
                 extractor: OmegaResourceExtractor,
                 format: OmegaImage.Format,
                 quality: Int
-        ): InputStream? = drawable.toBitmapAndRecycle { toInputStream(format, quality) }
+        ): InputStream? = entity.drawable.toBitmapAndRecycle { toInputStream(format, quality) }
 
     }
 

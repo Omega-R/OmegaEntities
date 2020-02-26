@@ -13,8 +13,12 @@ data class OmegaBitmapImage(val bitmap: Bitmap) : BaseBitmapImage() {
 
     class Processor : BaseBitmapImage.Processor<OmegaBitmapImage>(false) {
 
-        override suspend fun OmegaBitmapImage.getBitmap(extractor: OmegaResourceExtractor, width: Int?, height: Int?): Bitmap? =
-                bitmap
+        override suspend fun getBitmap(
+                entity: OmegaBitmapImage,
+                extractor: OmegaResourceExtractor,
+                width: Int?,
+                height: Int?
+        ): Bitmap? = entity.bitmap
 
     }
 

@@ -6,6 +6,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.util.TypedValue
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -58,6 +59,14 @@ actual open class OmegaResourceExtractor {
             context?.getDrawable(resource.id)
         } else {
             context?.resources?.getDrawable(resource.id)
+        }
+    }
+
+    fun resolveAttribute(omegaTypePlaceholderDefault: Int): Int? {
+        return context?.let { context ->
+            TypedValue().run {
+                if (context.theme.resolveAttribute(omegaTypePlaceholderDefault, this, true)) data else null
+            }
         }
     }
 

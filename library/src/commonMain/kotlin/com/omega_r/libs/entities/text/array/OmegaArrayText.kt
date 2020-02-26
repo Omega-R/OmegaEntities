@@ -1,6 +1,7 @@
 package com.omega_r.libs.entities.text.array
 
 import com.omega_r.libs.entities.text.OmegaText
+import com.omega_r.libs.entities.text.OmegaTextProcessorsHolder
 
 class OmegaArrayText internal constructor(vararg val array: OmegaText) : OmegaText {
 

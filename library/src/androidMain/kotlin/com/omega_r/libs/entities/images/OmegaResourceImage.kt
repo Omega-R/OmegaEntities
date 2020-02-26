@@ -21,18 +21,31 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
 
     class Processor : OmegaBaseImageProcessor<OmegaResourceImage>() {
 
-        override fun OmegaResourceImage.applyImageInner(imageView: ImageView, placeholderResId: Int, extractor: OmegaResourceExtractor) {
-            imageView.setImageResource(resource.id)
+        override fun applyImageInner(
+                entity: OmegaResourceImage,
+                imageView: ImageView,
+                placeholderResId: Int,
+                extractor: OmegaResourceExtractor
+        ) {
+            imageView.setImageResource(entity.resource.id)
         }
 
-        override fun OmegaResourceImage.applyBackgroundInner(view: View, placeholderResId: Int, extractor: OmegaResourceExtractor) {
-            view.setBackgroundResource(resource.id)
+        override fun applyBackgroundInner(
+                entity: OmegaResourceImage,
+                view: View,
+                placeholderResId: Int,
+                extractor: OmegaResourceExtractor
+        ) {
+            view.setBackgroundResource(entity.resource.id)
         }
 
-        override suspend fun OmegaResourceImage.getInputStream(extractor: OmegaResourceExtractor, format: OmegaImage.Format, quality: Int): InputStream? {
-            return extractor.getDrawable(resource)?.toBitmapAndRecycle {
-                toInputStream(format, quality)
-            }
+        override suspend fun getInputStream(
+                entity: OmegaResourceImage,
+                extractor: OmegaResourceExtractor,
+                format: OmegaImage.Format,
+                quality: Int
+        ): InputStream? = extractor.getDrawable(entity.resource)?.toBitmapAndRecycle {
+            toInputStream(format, quality)
         }
 
     }
@@ -40,3 +53,5 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
 }
 
 fun OmegaImage.Companion.from(@DrawableRes drawableRes: Int): OmegaImage = OmegaResourceImage(drawableRes)
+
+fun OmegaImage.Companion.from(resource: OmegaResource.Image): OmegaImage = OmegaResourceImage(resource)

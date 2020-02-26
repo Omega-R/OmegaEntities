@@ -1,12 +1,10 @@
 package com.omega_r.libs.entities.text.resource.text
 
-import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import com.omega_r.libs.entities.text.fromHtmlString
-import com.omega_r.libs.entities.text.resource.OmegaResourceTextProcessor
 import com.omega_r.libs.entities.text.toHtmlString
 
-actual object OmegaTextResourceTextProcessor : OmegaResourceTextProcessor<OmegaTextResourceText, OmegaResource.Text>() {
+actual object OmegaTextResourceTextProcessor : OmegaBaseTextResourceTextProcessor() {
 
     override fun extractWithArgs(
         entity: OmegaTextResourceText,
