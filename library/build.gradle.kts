@@ -27,6 +27,7 @@ buildscript {
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
+//    id("com.android.library")
     id("maven-publish")
 }
 
@@ -48,6 +49,23 @@ repositories {
 }
 
 configurations.create("compileClasspath")
+
+//android {
+//    compileSdkVersion(29)
+//
+//    defaultConfig {
+//        minSdkVersion(14)
+//        targetSdkVersion(29)
+//        versionCode = 1
+//    }
+//    sourceSets {
+//        val main by getting {
+//            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+//            res.srcDirs("src/androidMain/res")
+//        }
+//    }
+//
+//}
 
 kotlin {
     //need to use jvm because android doesnt export type alias

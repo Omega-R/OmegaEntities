@@ -16,7 +16,7 @@ buildscript {
 
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
-        classpath("com.android.tools.build:gradle:3.4.2")
+        classpath("com.android.tools.build:gradle:3.6.0")
     }
 
 }
@@ -50,8 +50,8 @@ android {
 }
 
 dependencies {
-    implementation project(':library')
     implementation fileTree(dir: 'library', include: ['*.jar'])
+    implementation project(':library')
 
     api "io.ktor:ktor-client-core:1.3.1"
     api "io.ktor:ktor-client-android:1.3.1"

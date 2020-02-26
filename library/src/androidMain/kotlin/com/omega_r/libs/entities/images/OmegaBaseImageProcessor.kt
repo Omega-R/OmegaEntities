@@ -43,8 +43,7 @@ abstract class OmegaBaseImageProcessor<I : OmegaImage> : OmegaImageProcessor<I> 
         return if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) {
             OmegaImage.NO_PLACEHOLDER_RES
         } else {
-
-//            extractor.resolveAttribute(R.attr.omegaTypePlaceholderDefault) ?: OmegaImage.NO_PLACEHOLDER_RES
+            // TODO extract placeholder
             placeholderResId
         }
     }

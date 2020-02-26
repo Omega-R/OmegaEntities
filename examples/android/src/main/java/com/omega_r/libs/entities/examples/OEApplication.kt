@@ -1,4 +1,4 @@
-package com.omega_r.entities
+package com.omega_r.libs.entities.examples
 
 import android.app.Application
 
