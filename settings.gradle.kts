@@ -24,5 +24,6 @@ rootProject.name = "entities"
 include("library")
 include("examples:android")
 include("examples")
+include("glide")
 
 enableFeaturePreview("GRADLE_METADATA")
