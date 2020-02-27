@@ -1,27 +1,24 @@
 package com.omega_r.libs.entities.images
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap.CompressFormat
-import android.graphics.Bitmap.CompressFormat.JPEG
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
 import android.widget.ImageView
-import com.omega_r.libs.entities.extensions.NO_PLACEHOLDER_RES
+import android.widget.TextView
 import com.omega_r.libs.entities.processors.OmegaProcessor
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import io.ktor.utils.io.core.Input
-import io.ktor.utils.io.streams.asInput
 import kotlinx.coroutines.CoroutineScope
-import java.io.InputStream
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
+@SuppressLint("ObsoleteSdkInt")
 actual interface OmegaImageProcessor<T : OmegaImage> : OmegaProcessor<T>, CoroutineScope {
 
     companion object {
 
         @Suppress("DEPRECATION")
-        @SuppressLint("ObsoleteSdkInt")
         fun applyBackground(view: View, background: Drawable?) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                 view.setBackgroundDrawable(background)
@@ -30,11 +27,21 @@ actual interface OmegaImageProcessor<T : OmegaImage> : OmegaProcessor<T>, Corout
             }
         }
 
-        fun applyEmptyBackground(view: View, placeholderResId: Int) {
-            if (placeholderResId != OmegaImage.NO_PLACEHOLDER_RES) {
-                view.setBackgroundResource(placeholderResId)
+        fun applyCompoundDrawable(textView: TextView, drawable: Drawable?, index: Int) {
+            val drawables = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                textView.compoundDrawablesRelative
             } else {
-                applyBackground(view, null)
+                textView.compoundDrawables
+            }
+            drawables[index] = drawable
+            applyCompoundDrawables(textView, drawables)
+        }
+
+        fun applyCompoundDrawables(textView: TextView, drawables: Array<Drawable?>) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(drawables[0], drawables[1], drawables[2], drawables[3])
+            } else {
+                textView.setCompoundDrawablesWithIntrinsicBounds(drawables[0], drawables[1], drawables[2], drawables[3])
             }
         }
 
@@ -50,14 +57,22 @@ actual interface OmegaImageProcessor<T : OmegaImage> : OmegaProcessor<T>, Corout
     fun applyImage(
             entity: T,
             imageView: ImageView,
-            placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
+            holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.Default,
             extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
     )
 
     fun applyBackground(
             entity: T,
             view: View,
-            placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
+            holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.Default,
+            extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
+    )
+
+    fun applyCompoundImage(
+            entity: T,
+            index: Int,
+            textView: TextView,
+            holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.Default,
             extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
     )
 

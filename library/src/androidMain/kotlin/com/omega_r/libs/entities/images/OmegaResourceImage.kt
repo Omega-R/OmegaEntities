@@ -3,10 +3,14 @@ package com.omega_r.libs.entities.images
 import android.annotation.DrawableRes
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import com.omega_r.libs.entities.extensions.NO_PLACEHOLDER_RES
 import com.omega_r.libs.entities.extensions.toBitmapAndRecycle
 import com.omega_r.libs.entities.extensions.toInputStream
 import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.InputStream
 
 actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) : OmegaImage {
@@ -21,22 +25,43 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
 
     class Processor : OmegaBaseImageProcessor<OmegaResourceImage>() {
 
-        override fun applyImageInner(
+        override fun applyImage(
                 entity: OmegaResourceImage,
                 imageView: ImageView,
-                placeholderResId: Int,
+                holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            imageView.setImageResource(entity.resource.id)
+            val id = entity.resource.id
+            if (id == OmegaImage.NO_PLACEHOLDER_RES) {
+                imageView.setImageDrawable(null)
+            } else {
+                imageView.setImageResource(id)
+            }
         }
 
-        override fun applyBackgroundInner(
+        override fun applyBackground(
                 entity: OmegaResourceImage,
                 view: View,
-                placeholderResId: Int,
+                holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            view.setBackgroundResource(entity.resource.id)
+            val id = entity.resource.id
+            if (id == OmegaImage.NO_PLACEHOLDER_RES) {
+                view.background = null
+            } else {
+                view.setBackgroundResource(id)
+            }
+        }
+
+        override fun applyCompoundImage(
+                entity: OmegaResourceImage,
+                index: Int,
+                textView: TextView,
+                holder: OmegaImageProcessorsHolder,
+                extractor: OmegaResourceExtractor
+        ) {
+            val drawable = extractor.getDrawable(entity.resource)
+            OmegaImageProcessor.applyCompoundDrawable(textView, drawable, index)
         }
 
         override suspend fun getInputStream(

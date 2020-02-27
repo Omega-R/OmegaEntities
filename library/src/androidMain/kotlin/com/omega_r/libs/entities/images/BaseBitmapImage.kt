@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.omega_r.libs.entities.decoders.BitmapDecoders
-import com.omega_r.libs.entities.extensions.NO_PLACEHOLDER_RES
 import com.omega_r.libs.entities.extensions.toInputStream
 import com.omega_r.libs.entities.images.OmegaImageProcessor.Companion.applyBackground
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
@@ -14,13 +14,16 @@ import com.omega_r.libs.entities.tools.ImageSizeExtractor
 import com.omega_r.libs.entities.tools.getScaledBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.lang.ref.WeakReference
 
 abstract class BaseBitmapImage : OmegaImage {
 
-    abstract class Processor<B : BaseBitmapImage>(private val autoRecycle: Boolean) : OmegaBaseImageProcessor<B>(), OmegaImageProcessor<B> {
+    abstract class Processor<B : BaseBitmapImage>(
+            private val autoRecycle: Boolean
+    ) : OmegaBaseImageProcessor<B>(), OmegaImageProcessor<B> {
 
         protected abstract suspend fun getBitmap(
                 entity: B,
@@ -29,19 +32,18 @@ abstract class BaseBitmapImage : OmegaImage {
                 height: Int? = null
         ): Bitmap?
 
-        override fun applyImageInner(entity: B, imageView: ImageView, placeholderResId: Int, extractor: OmegaResourceExtractor) {
-            if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) {
-                imageView.setImageDrawable(null)
-            } else {
-                imageView.setImageResource(placeholderResId)
-            }
-
+        override fun applyImage(
+                entity: B,
+                imageView: ImageView,
+                holder: OmegaImageProcessorsHolder,
+                extractor: OmegaResourceExtractor
+        ) {
             val width = imageView.width
             val height = imageView.height
 
             if (width <= 0 || height <= 0) {
                 ImageSizeExtractor(imageView) { target ->
-                    applyImageInner(entity, target, placeholderResId, extractor)
+                    applyImage(entity, target, holder, extractor)
                 }
             } else {
                 val imageScaleType = imageView.scaleType
@@ -53,13 +55,12 @@ abstract class BaseBitmapImage : OmegaImage {
             }
         }
 
-        override fun applyBackgroundInner(entity: B, view: View, placeholderResId: Int, extractor: OmegaResourceExtractor) {
-            if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) {
-                view.background = null
-            } else {
-                view.setBackgroundResource(placeholderResId)
-            }
-
+        override fun applyBackground(
+                entity: B,
+                view: View,
+                holder: OmegaImageProcessorsHolder,
+                extractor: OmegaResourceExtractor
+        ) {
             val viewWeak = WeakReference(view)
             val processor = OmegaImageProcessorsHolder.current.getProcessor(entity)
             processor.launch {
@@ -72,7 +73,27 @@ abstract class BaseBitmapImage : OmegaImage {
             }
         }
 
-        override suspend fun getInputStream(entity: B, extractor: OmegaResourceExtractor, format: OmegaImage.Format, quality: Int): InputStream? {
+        override fun applyCompoundImage(
+                entity: B,
+                index: Int,
+                textView: TextView,
+                holder: OmegaImageProcessorsHolder,
+                extractor: OmegaResourceExtractor
+        ) {
+            runBlocking {
+                val drawable = getBitmap(entity, extractor)?.let { bitmap ->
+                    extractor.context?.let { BitmapDrawable(it.resources, bitmap) } ?: BitmapDrawable(bitmap)
+                }
+                OmegaImageProcessor.applyCompoundDrawable(textView, drawable, index)
+            }
+        }
+
+        override suspend fun getInputStream(
+                entity: B,
+                extractor: OmegaResourceExtractor,
+                format: OmegaImage.Format,
+                quality: Int
+        ): InputStream? {
             val bitmap = getBitmap(entity, extractor)
             try {
                 return bitmap.toInputStream(format, quality)

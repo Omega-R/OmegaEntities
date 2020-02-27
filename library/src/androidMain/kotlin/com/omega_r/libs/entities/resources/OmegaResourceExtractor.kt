@@ -28,7 +28,7 @@ actual open class OmegaResourceExtractor {
 
     protected open lateinit var contextReference: WeakReference<Context>
 
-    protected open val context: Context?
+    open val context: Context?
         get() = contextReference.get()
 
     val contentResolver: ContentResolver?
