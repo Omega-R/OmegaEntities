@@ -6,13 +6,13 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.Omega-R'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion project.compile_sdk_version.toInteger()
+    buildToolsVersion project.build_tools_version
 
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdkVersion project.min_sdk_version.toInteger()
+        targetSdkVersion project.target_sdk_version.toInteger()
         versionCode 1
         versionName "1.0"
 

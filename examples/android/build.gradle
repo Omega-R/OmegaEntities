@@ -26,11 +26,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion project.compile_sdk_version.toInteger()
+    buildToolsVersion project.build_tools_version
+
     defaultConfig {
-        applicationId "com.omega_r.entities"
-        minSdkVersion 19
-        targetSdkVersion 29
+        applicationId "com.omega_r.libs.entities"
+        minSdkVersion project.min_sdk_version.toInteger()
+        targetSdkVersion project.target_sdk_version.toInteger()
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
