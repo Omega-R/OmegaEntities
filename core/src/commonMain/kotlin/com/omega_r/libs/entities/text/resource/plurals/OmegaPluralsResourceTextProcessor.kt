@@ -1,0 +1,3 @@
+package com.omega_r.libs.entities.text.resource.plurals
+
+expect object OmegaPluralsResourceTextProcessor : OmegaBaseTextResourceTextProcessor
