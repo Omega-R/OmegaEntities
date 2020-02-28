@@ -6,6 +6,8 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
+import com.omega_r.libs.entities.extensions.NO_PLACEHOLDER_RES
+import com.omega_r.libs.entities.images.OmegaImage
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -54,6 +56,7 @@ actual open class OmegaResourceExtractor {
     }
 
     open fun getDrawable(resource: OmegaResource.Image): Drawable? {
+        if (resource.id == OmegaImage.NO_PLACEHOLDER_RES) return null
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
             context?.getDrawable(resource.id)
         } else {

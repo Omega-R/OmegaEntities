@@ -54,9 +54,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'core', include: ['*.jar'])
     implementation project(':core')
+    implementation project(':glide')
 
-    api "io.ktor:ktor-client-core:1.3.1"
-    api "io.ktor:ktor-client-android:1.3.1"
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-android:$ktor_version"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'

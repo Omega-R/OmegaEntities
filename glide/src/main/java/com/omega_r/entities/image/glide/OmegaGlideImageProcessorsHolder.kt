@@ -11,6 +11,7 @@ import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.omega_r.libs.entities.decoders.BitmapDecoders
 import com.omega_r.libs.entities.decoders.SimpleBitmapDecoders
+import com.omega_r.libs.entities.extensions.NO_PLACEHOLDER_RES
 import com.omega_r.libs.entities.extensions.toInputStream
 import com.omega_r.libs.entities.images.*
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
@@ -69,8 +70,14 @@ class OmegaGlideImageProcessorsHolder(
                     when (val placeholderImage = image.placeholderImage) {
                         is OmegaUrlImage -> thumbnail(load(placeholderImage.url))
                                 .load(createRequestBuilder(image.finalImage, extractor))
-                        is OmegaResourceImage -> placeholder(placeholderImage.resource.id)
-                                .load(createRequestBuilder(image.finalImage, extractor))
+                        is OmegaResourceImage -> {
+                            if (placeholderImage.resource.id == OmegaImage.NO_PLACEHOLDER_RES) {
+                                createRequestBuilder(image.finalImage, extractor)
+                            } else {
+                                placeholder(placeholderImage.resource.id)
+                                        .load(createRequestBuilder(image.finalImage, extractor))
+                            }
+                        }
                         is OmegaDrawableImage -> placeholder(placeholderImage.drawable)
                                 .load(createRequestBuilder(image.finalImage, extractor))
                         is OmegaBitmapImage, is OmegaUriImage, is OmegaJavaFileImage, is OmegaByteArrayImage -> {
