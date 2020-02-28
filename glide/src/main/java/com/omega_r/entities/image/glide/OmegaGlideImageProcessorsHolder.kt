@@ -19,18 +19,20 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KClass
+import io.ktor.utils.io.core.Input
 
-class OmegaGlideImageProcessorHolder(
+class OmegaGlideImageProcessorsHolder(
         private val defaultHolder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.Default,
         private vararg val excludeImageClasses: KClass<out OmegaImage>
 ) : OmegaImageProcessorsHolder {
 
     companion object {
 
-        fun setAsCurrentImagesProcessor() {
-            if (OmegaImageProcessorsHolder.current !is OmegaGlideImageProcessorHolder) {
-                OmegaImageProcessorsHolder.current = OmegaGlideImageProcessorHolder(OmegaImageProcessorsHolder.current)
-            }
+        fun setAsCurrentImagesProcessor(
+                defaultHolder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
+                vararg excludeImageClasses: KClass<out OmegaImage>
+        ) {
+            OmegaImageProcessorsHolder.current = OmegaGlideImageProcessorsHolder(defaultHolder, *excludeImageClasses)
         }
 
         fun setGlideBitmapPool(context: Context) {
@@ -39,13 +41,13 @@ class OmegaGlideImageProcessorHolder(
 
     }
 
-    private val processor = GlideImageProcessor()
+    private val processor = Processor()
 
     override fun getProcessor(entity: OmegaImage): OmegaImageProcessor<OmegaImage> {
         return if (excludeImageClasses.contains(entity::class)) defaultHolder.getProcessor(entity) else processor
     }
 
-    inner class GlideImageProcessor : OmegaImageProcessor<OmegaImage>, CoroutineScope {
+    private inner class Processor : OmegaImageProcessor<OmegaImage>, CoroutineScope {
 
         override val coroutineContext: CoroutineContext = Dispatchers.Default
 
@@ -150,7 +152,7 @@ class OmegaGlideImageProcessorHolder(
                 extractor: OmegaResourceExtractor,
                 format: OmegaImage.Format,
                 quality: Int
-        ): io.ktor.utils.io.core.Input? {
+        ): Input? {
             return extractor.context?.let { context ->
                 Glide.with(context)
                         .asBitmap()

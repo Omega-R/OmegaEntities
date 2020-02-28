@@ -25,5 +25,6 @@ include("library")
 include("examples:android")
 include("examples")
 include("glide")
+include("picasso")
 
 enableFeaturePreview("GRADLE_METADATA")
