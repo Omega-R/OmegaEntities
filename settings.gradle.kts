@@ -21,7 +21,7 @@ pluginManagement {
 }
 rootProject.name = "entities"
 
-include("library")
+include("core")
 include("examples:android")
 include("examples")
 include("glide")

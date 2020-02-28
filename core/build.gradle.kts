@@ -71,7 +71,7 @@ kotlin {
     iOSTarget("ios") {
         binaries {
             framework {
-                baseName = "library"
+                baseName = "core"
             }
         }
     }
