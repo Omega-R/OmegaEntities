@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.omega_r.libs.entities.extensions.NO_PLACEHOLDER_RES
 import com.omega_r.libs.entities.extensions.toInputStream
 import com.omega_r.libs.entities.images.*
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
@@ -61,7 +62,7 @@ class OmegaPicassoProcessorsHolder(
                 is OmegaPlaceholderImage -> {
                     val request = createRequestCreator(image.finalImage)
                     when (val placeholderImage = image.placeholderImage) {
-                        is OmegaResourceImage -> request?.placeholder(placeholderImage.resource.id)
+                        is OmegaResourceImage -> if(placeholderImage.resource.id == OmegaImage.NO_PLACEHOLDER_RES) request else request?.placeholder(placeholderImage.resource.id)
                         is OmegaDrawableImage -> request?.placeholder(placeholderImage.drawable)
                         else -> null
                     }

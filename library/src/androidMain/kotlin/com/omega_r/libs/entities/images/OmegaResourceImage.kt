@@ -9,8 +9,6 @@ import com.omega_r.libs.entities.extensions.toBitmapAndRecycle
 import com.omega_r.libs.entities.extensions.toInputStream
 import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.InputStream
 
 actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) : OmegaImage {
@@ -21,7 +19,7 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
         }
     }
 
-    constructor(@DrawableRes drawableRes: Int): this(OmegaResource.Image(drawableRes))
+    constructor(@DrawableRes drawableRes: Int) : this(OmegaResource.Image(drawableRes))
 
     class Processor : OmegaBaseImageProcessor<OmegaResourceImage>() {
 
@@ -60,7 +58,8 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            val drawable = extractor.getDrawable(entity.resource)
+            val id = entity.resource.id
+            val drawable = if (id == OmegaImage.NO_PLACEHOLDER_RES) null else extractor.getDrawable(entity.resource)
             OmegaImageProcessor.applyCompoundDrawable(textView, drawable, index)
         }
 
@@ -69,8 +68,12 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
                 extractor: OmegaResourceExtractor,
                 format: OmegaImage.Format,
                 quality: Int
-        ): InputStream? = extractor.getDrawable(entity.resource)?.toBitmapAndRecycle {
-            toInputStream(format, quality)
+        ): InputStream? {
+            return if (entity.resource.id == OmegaImage.NO_PLACEHOLDER_RES) {
+                null
+            } else extractor.getDrawable(entity.resource)?.toBitmapAndRecycle {
+                toInputStream(format, quality)
+            }
         }
 
     }

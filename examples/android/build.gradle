@@ -54,6 +54,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'library', include: ['*.jar'])
     implementation project(':library')
+    implementation project(':glide')
 
     api "io.ktor:ktor-client-core:1.3.1"
     api "io.ktor:ktor-client-android:1.3.1"

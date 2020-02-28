@@ -3,6 +3,10 @@ package com.omega_r.libs.entities.tools
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
 import android.view.ViewTreeObserver.OnPreDrawListener
+import com.omega_r.libs.entities.images.OmegaImage
+import com.omega_r.libs.entities.images.OmegaImageProcessor
+import com.omega_r.libs.entities.images.OmegaImageProcessorsHolder
+import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -45,9 +49,7 @@ class ImageSizeExtractor<V : View>(target: V, callback: suspend (view: V) -> Uni
         vto.removeOnPreDrawListener(this)
         this.target.clear()
 
-//        ImageProcessors.current.launch {
-//            callback?.invoke(target)
-//        }
+        runBlocking { callback?.invoke(target) }
 
         return true
     }

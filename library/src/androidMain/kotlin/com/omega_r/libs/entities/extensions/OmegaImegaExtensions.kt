@@ -29,26 +29,21 @@ fun OmegaImage.Format.toCompressFormat(): Bitmap.CompressFormat {
 fun ImageView.setImage(
         image: OmegaImage?,
         placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
-        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.Default,
+        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
         extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
 ) {
-    val imageView = this
-    if (image != null) {
-        val placeholderImage = OmegaImage.from(placeholderResId, image)
-        holder.getProcessor(placeholderImage)
-                .applyImage(placeholderImage, imageView, holder, extractor)
+    val finalImage = image.formatImage(placeholderResId)
+    if (finalImage == null) {
+        setImageDrawable(null)
     } else {
-        if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) {
-            setImageDrawable(null)
-        } else {
-            setImageResource(placeholderResId)
-        }
+        holder.getProcessor(finalImage)
+                .applyImage(finalImage, this, holder, extractor)
     }
 }
 
 @JvmOverloads
 fun OmegaImage.preload(
-        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.Default,
+        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
         extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
 ) {
     holder.getProcessor(this).preload(this, extractor)
@@ -58,21 +53,27 @@ fun OmegaImage.preload(
 fun View.setBackground(
         image: OmegaImage?,
         placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
-        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.Default,
+        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
         extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
 ) {
-    if (image != null) {
-        val placeholderImage = OmegaImage.from(placeholderResId, image)
-        holder.getProcessor(placeholderImage)
-                .applyBackground(placeholderImage, this, holder, extractor)
+    val finalImage = image.formatImage(placeholderResId)
+    if (finalImage == null) {
+        background = null
     } else {
-        if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) {
-            background = null
-        } else {
-            setBackgroundResource(placeholderResId)
-        }
+        holder.getProcessor(finalImage)
+                .applyBackground(finalImage, this, holder, extractor)
     }
 }
+
+private fun OmegaImage?.formatImage(placeholderResId: Int): OmegaImage? {
+    val image = this
+    return if (image == null) {
+        if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) null else OmegaImage.from(placeholderResId)
+    } else {
+        if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) image else OmegaImage.from(placeholderResId, image)
+    }
+}
+
 
 var TextView.imageStart: OmegaImage?
     get() = getImage(0)
