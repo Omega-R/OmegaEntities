@@ -33,7 +33,7 @@ abstract class BaseBitmapImage : OmegaImage {
         ): Bitmap?
 
         override fun applyImage(
-                entity: B,
+                image: B,
                 imageView: ImageView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
@@ -43,12 +43,12 @@ abstract class BaseBitmapImage : OmegaImage {
 
             if (width <= 0 || height <= 0) {
                 ImageSizeExtractor(imageView) { target ->
-                    applyImage(entity, target, holder, extractor)
+                    applyImage(image, target, holder, extractor)
                 }
             } else {
                 val imageScaleType = imageView.scaleType
                 executeImageAsync(imageView, {
-                    getBitmap(entity, extractor, width, height)?.run {
+                    getBitmap(image, extractor, width, height)?.run {
                         getScaledBitmap(width, height, imageScaleType, autoRecycle, this)
                     }
                 }, ImageView::setImageBitmap)
@@ -56,15 +56,15 @@ abstract class BaseBitmapImage : OmegaImage {
         }
 
         override fun applyBackground(
-                entity: B,
+                image: B,
                 view: View,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
             val viewWeak = WeakReference(view)
-            val processor = OmegaImageProcessorsHolder.current.getProcessor(entity)
+            val processor = OmegaImageProcessorsHolder.current.getProcessor(image)
             processor.launch {
-                val bitmap = getBitmap(entity, extractor)
+                val bitmap = getBitmap(image, extractor)
                 withContext(Dispatchers.Main) {
                     viewWeak.get()?.let { view ->
                         applyBackground(view, bitmap?.let { BitmapDrawable(view.resources, it) })
@@ -74,14 +74,14 @@ abstract class BaseBitmapImage : OmegaImage {
         }
 
         override fun applyCompoundImage(
-                entity: B,
+                image: B,
                 index: Int,
                 textView: TextView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
             runBlocking {
-                val drawable = getBitmap(entity, extractor)?.let { bitmap ->
+                val drawable = getBitmap(image, extractor)?.let { bitmap ->
                     extractor.context?.let { BitmapDrawable(it.resources, bitmap) } ?: BitmapDrawable(bitmap)
                 }
                 OmegaImageProcessor.applyCompoundDrawable(textView, drawable, index)

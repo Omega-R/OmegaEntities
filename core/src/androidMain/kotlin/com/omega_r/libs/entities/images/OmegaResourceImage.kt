@@ -24,12 +24,12 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
     class Processor : OmegaBaseImageProcessor<OmegaResourceImage>() {
 
         override fun applyImage(
-                entity: OmegaResourceImage,
+                image: OmegaResourceImage,
                 imageView: ImageView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            val id = entity.resource.id
+            val id = image.resource.id
             if (id == OmegaImage.NO_PLACEHOLDER_RES) {
                 imageView.setImageDrawable(null)
             } else {
@@ -38,12 +38,12 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
         }
 
         override fun applyBackground(
-                entity: OmegaResourceImage,
+                image: OmegaResourceImage,
                 view: View,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            val id = entity.resource.id
+            val id = image.resource.id
             if (id == OmegaImage.NO_PLACEHOLDER_RES) {
                 view.background = null
             } else {
@@ -52,14 +52,14 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
         }
 
         override fun applyCompoundImage(
-                entity: OmegaResourceImage,
+                image: OmegaResourceImage,
                 index: Int,
                 textView: TextView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            val id = entity.resource.id
-            val drawable = if (id == OmegaImage.NO_PLACEHOLDER_RES) null else extractor.getDrawable(entity.resource)
+            val id = image.resource.id
+            val drawable = if (id == OmegaImage.NO_PLACEHOLDER_RES) null else extractor.getDrawable(image.resource)
             OmegaImageProcessor.applyCompoundDrawable(textView, drawable, index)
         }
 

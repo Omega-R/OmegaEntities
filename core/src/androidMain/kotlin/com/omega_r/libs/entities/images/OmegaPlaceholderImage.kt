@@ -23,29 +23,29 @@ open class OmegaPlaceholderImage(
     class Processor : OmegaBaseImageProcessor<OmegaPlaceholderImage>() {
 
         override fun applyImage(
-                entity: OmegaPlaceholderImage,
+                image: OmegaPlaceholderImage,
                 imageView: ImageView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
             apply({ image ->
                 holder.getProcessor(image).applyImage(image, imageView, holder, extractor)
-            }, entity.placeholderImage, entity.finalImage)
+            }, image.placeholderImage, image.finalImage)
         }
 
         override fun applyBackground(
-                entity: OmegaPlaceholderImage,
+                image: OmegaPlaceholderImage,
                 view: View,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
             apply({ image ->
                 holder.getProcessor(image).applyBackground(image, view, holder, extractor)
-            }, entity.placeholderImage, entity.finalImage)
+            }, image.placeholderImage, image.finalImage)
         }
 
         override fun applyCompoundImage(
-                entity: OmegaPlaceholderImage,
+                image: OmegaPlaceholderImage,
                 index: Int,
                 textView: TextView,
                 holder: OmegaImageProcessorsHolder,
@@ -53,7 +53,7 @@ open class OmegaPlaceholderImage(
         ) {
             apply({ image ->
                 holder.getProcessor(image).applyCompoundImage(image, index, textView, holder, extractor)
-            }, entity.placeholderImage, entity.finalImage)
+            }, image.placeholderImage, image.finalImage)
         }
 
         override suspend fun getInputStream(

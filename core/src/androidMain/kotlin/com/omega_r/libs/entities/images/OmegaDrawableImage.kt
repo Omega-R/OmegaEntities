@@ -7,8 +7,6 @@ import android.widget.TextView
 import com.omega_r.libs.entities.extensions.toBitmapAndRecycle
 import com.omega_r.libs.entities.extensions.toInputStream
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.InputStream
 
 data class OmegaDrawableImage(val drawable: Drawable) : BaseBitmapImage(), OmegaImage {
@@ -22,21 +20,21 @@ data class OmegaDrawableImage(val drawable: Drawable) : BaseBitmapImage(), Omega
     class Processor : OmegaBaseImageProcessor<OmegaDrawableImage>() {
 
         override fun applyImage(
-                entity: OmegaDrawableImage,
+                image: OmegaDrawableImage,
                 imageView: ImageView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            imageView.setImageDrawable(entity.drawable)
+            imageView.setImageDrawable(image.drawable)
         }
 
         override fun applyBackground(
-                entity: OmegaDrawableImage,
+                image: OmegaDrawableImage,
                 view: View,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            OmegaImageProcessor.applyBackground(view, entity.drawable)
+            OmegaImageProcessor.applyBackground(view, image.drawable)
         }
 
         override suspend fun getInputStream(
@@ -47,13 +45,13 @@ data class OmegaDrawableImage(val drawable: Drawable) : BaseBitmapImage(), Omega
         ): InputStream? = entity.drawable.toBitmapAndRecycle { toInputStream(format, quality) }
 
         override fun applyCompoundImage(
-                entity: OmegaDrawableImage,
+                image: OmegaDrawableImage,
                 index: Int,
                 textView: TextView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            OmegaImageProcessor.applyCompoundDrawable(textView, entity.drawable, index)
+            OmegaImageProcessor.applyCompoundDrawable(textView, image.drawable, index)
         }
 
     }

@@ -8,6 +8,6 @@ import io.ktor.utils.io.core.Input
 
 expect interface OmegaImageProcessor<T : OmegaImage> : OmegaProcessor<T> {
 
-    suspend fun getInput(entity: T, extractor: OmegaResourceExtractor, format: Format = JPEG, quality: Int = 100): Input?
+    suspend fun getInput(image: T, extractor: OmegaResourceExtractor, format: Format = JPEG, quality: Int = 100): Input?
 
 }
