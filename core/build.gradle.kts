@@ -28,7 +28,7 @@ buildscript {
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.github.dcendents.android-maven")
-    id("maven-publish")
+//    id("maven-publish")
 }
 
 val local = Properties()
