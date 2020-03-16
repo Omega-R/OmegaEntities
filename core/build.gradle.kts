@@ -27,7 +27,7 @@ buildscript {
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
-//    id("com.github.dcendents.android-maven")
+    id("com.github.dcendents.android-maven")
     id("maven-publish")
 }
 
@@ -107,11 +107,11 @@ kotlin {
             }
         }
 
-        val iosMain by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktor_version")
-            }
-        }
+//        val iosMain by getting {
+//            dependencies {
+//                implementation("io.ktor:ktor-client-ios:$ktor_version")
+//            }
+//        }
 
     }
 }
@@ -120,32 +120,31 @@ val javadocJar by tasks.creating(Jar::class) {
     archiveClassifier.value("javadoc")
 }
 
-val packForXcode by tasks.creating(Sync::class) {
-    val targetDir = File(buildDir, "xcode-frameworks")
-
-    /// selecting the right configuration for the iOS
-    /// framework depending on the environment
-    /// variables set by Xcode build
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val framework = kotlin.targets
-        .getByName<KotlinNativeTarget>("ios")
-        .binaries.getFramework(mode)
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
-
-    from({ framework.outputDirectory })
-    into(targetDir)
-
-    /// generate a helpful ./gradlew wrapper with embedded Java path
-    doLast {
-        val gradlew = File(targetDir, "gradlew")
-        gradlew.writeText("#!/bin/bash\n"
-                + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
-                + "cd '${rootProject.rootDir}'\n"
-                + "./gradlew \$@\n")
-        gradlew.setExecutable(true)
-    }
-}
-
-tasks.getByName("build").dependsOn(packForXcode)
-//tasks.getByName("install").enabled = false
+//val packForXcode by tasks.creating(Sync::class) {
+//    val targetDir = File(buildDir, "xcode-frameworks")
+//
+//    /// selecting the right configuration for the iOS
+//    /// framework depending on the environment
+//    /// variables set by Xcode build
+//    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
+//    val framework = kotlin.targets
+//        .getByName<KotlinNativeTarget>("ios")
+//        .binaries.getFramework(mode)
+//    inputs.property("mode", mode)
+//    dependsOn(framework.linkTask)
+//
+//    from({ framework.outputDirectory })
+//    into(targetDir)
+//
+//    /// generate a helpful ./gradlew wrapper with embedded Java path
+//    doLast {
+//        val gradlew = File(targetDir, "gradlew")
+//        gradlew.writeText("#!/bin/bash\n"
+//                + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
+//                + "cd '${rootProject.rootDir}'\n"
+//                + "./gradlew \$@\n")
+//        gradlew.setExecutable(true)
+//    }
+//}
+//
+//tasks.getByName("build").dependsOn(packForXcode)
