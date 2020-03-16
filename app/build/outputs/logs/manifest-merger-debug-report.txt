@@ -1,0 +1,57 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+	package
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:3:9-44
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:1-19:12
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:2:11-69
+application
+ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:5:5-17:19
+	android:supportsRtl
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:8:13-39
+	android:label
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:7:13-45
+	android:allowBackup
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:6:13-39
+	android:theme
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:9:13-44
+provider#com.omega_r.libs.entities.resources.OmegaResourceExtractor$OmegaContentResolver
+ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:11:9-15:43
+	android:authorities
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:13:17-76
+	android:exported
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:14:17-41
+	android:initOrder
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:15:17-40
+	android:name
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml:12:17-111
+uses-sdk
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+		ADDED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
+		INJECTED from /Workspace/IDEAOmegaEntities/app/src/main/AndroidManifest.xml
