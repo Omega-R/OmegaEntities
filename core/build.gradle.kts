@@ -148,3 +148,5 @@ val javadocJar by tasks.creating(Jar::class) {
 //}
 //
 //tasks.getByName("build").dependsOn(packForXcode)
+
+tasks.getByName("install").enabled = false
