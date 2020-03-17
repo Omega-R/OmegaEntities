@@ -6,13 +6,13 @@ buildscript {
     val android_tools_version: String by project
 
     repositories {
-        mavenLocal()
-        mavenCentral()
+//        mavenLocal()
+//        mavenCentral()
         jcenter()
         google()
         maven(url = "https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
         maven(url = "https://jitpack.io")
-        maven(url = "https://maven.google.com")
+//        maven(url = "https://maven.google.com")
         maven(url = "https://plugins.gradle.org/m2/")
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
         maven(url = "https://kotlin.bintray.com/kotlinx")
@@ -28,7 +28,7 @@ buildscript {
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.github.dcendents.android-maven")
-    id("maven-publish")
+//    id("maven-publish")
 }
 
 val local = Properties()
@@ -38,8 +38,8 @@ if (localProperties.exists()) {
 }
 
 repositories {
-    mavenLocal()
-    mavenCentral()
+//    mavenLocal()
+//    mavenCentral()
     google()
     jcenter()
     maven(url = "https://jitpack.io")
@@ -62,19 +62,19 @@ kotlin {
     }
 
     //select iOS target platform depending on the Xcode environment variables
-    val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-            ::iosArm64
-        else
-            ::iosX64
+//    val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
+//        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
+//            ::iosArm64
+//        else
+//            ::iosX64
 
-    iOSTarget("ios") {
-        binaries {
-            framework {
-                baseName = "core"
-            }
-        }
-    }
+//    iOSTarget("ios") {
+//        binaries {
+//            framework {
+//                baseName = "core"
+//            }
+//        }
+//    }
 
     sourceSets {
         val commonMain by getting {
@@ -148,5 +148,11 @@ val javadocJar by tasks.creating(Jar::class) {
 //}
 //
 //tasks.getByName("build").dependsOn(packForXcode)
+//tasks.getByName("install").enabled = false
 
-tasks.getByName("install").enabled = false
+tasks.forEach { task ->
+    val name = task.name
+    if(name.contains("ios", true)) {
+        task.enabled = false
+    }
+}
