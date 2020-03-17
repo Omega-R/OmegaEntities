@@ -6,13 +6,13 @@ buildscript {
     val android_tools_version: String by project
 
     repositories {
-//        mavenLocal()
-//        mavenCentral()
+        mavenLocal()
+        mavenCentral()
         jcenter()
         google()
         maven(url = "https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
         maven(url = "https://jitpack.io")
-//        maven(url = "https://maven.google.com")
+        maven(url = "https://maven.google.com")
         maven(url = "https://plugins.gradle.org/m2/")
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
         maven(url = "https://kotlin.bintray.com/kotlinx")
@@ -21,14 +21,14 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("com.android.tools.build:gradle:$android_tools_version")
-        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
+//        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
-    id("com.github.dcendents.android-maven")
-//    id("maven-publish")
+//    id("com.github.dcendents.android-maven")
+    id("maven-publish")
 }
 
 val local = Properties()
@@ -38,8 +38,8 @@ if (localProperties.exists()) {
 }
 
 repositories {
-//    mavenLocal()
-//    mavenCentral()
+    mavenLocal()
+    mavenCentral()
     google()
     jcenter()
     maven(url = "https://jitpack.io")
@@ -150,9 +150,9 @@ val javadocJar by tasks.creating(Jar::class) {
 //tasks.getByName("build").dependsOn(packForXcode)
 //tasks.getByName("install").enabled = false
 
-tasks.forEach { task ->
-    val name = task.name
-    if(name.contains("ios", true)) {
-        task.enabled = false
-    }
-}
+//tasks.forEach { task ->
+//    val name = task.name
+//    if(name.contains("ios", true)) {
+//        task.enabled = false
+//    }
+//}
