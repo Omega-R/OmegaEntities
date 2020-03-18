@@ -35,15 +35,16 @@ interface OmegaColor : OmegaEntity {
         val TEAL = OmegaIntColor(-0xff7f80)
         val TRANSPARENT = OmegaIntColor(0)
 
-        fun fromInt(colorInt: Int) = OmegaIntColor(colorInt)
+        fun fromInt(colorInt: Int): OmegaColor = OmegaIntColor(colorInt)
 
-        fun fromResource(resource: OmegaResource.Color) = OmegaResourceColor(resource)
+        fun fromResource(resource: OmegaResource.Color): OmegaColor = OmegaResourceColor(resource)
 
-        fun fromHex(hex: String) = OmegaHexColor(hex)
+        fun fromHex(hex: String): OmegaColor = OmegaHexColor(hex)
 
-        fun fromName(name: String) = OmegaNameColor(name)
+        fun fromName(name: String): OmegaColor = OmegaNameColor(name)
 
-        fun fromArgb(alpha: Int, red: Int, green: Int, blue: Int) = OmegaArgbColor(alpha, red, green, blue)
+        fun fromArgb(alpha: Int, red: Int, green: Int, blue: Int): OmegaColor =
+            OmegaArgbColor(alpha, red, green, blue)
 
     }
 
