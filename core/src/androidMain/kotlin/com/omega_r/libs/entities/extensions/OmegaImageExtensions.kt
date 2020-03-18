@@ -13,7 +13,6 @@ import com.omega_r.libs.entities.images.OmegaImageProcessor
 import com.omega_r.libs.entities.images.OmegaImageProcessorsHolder
 import com.omega_r.libs.entities.images.from
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
-import com.omega_r.libs.entities.text.extractor
 
 val OmegaImage.Companion.NO_PLACEHOLDER_RES: Int
     get() = 0

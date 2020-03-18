@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.omega_r.libs.entities.extensions.from
+import com.omega_r.libs.entities.extensions.setText
 import com.omega_r.libs.entities.text.OmegaText
-import com.omega_r.libs.entities.text.from
-import com.omega_r.libs.entities.text.setText
 import com.omega_r.libs.entities.text.styled.styles.OmegaFontStyleTextStyle
 import com.omega_r.libs.entities.text.styled.styles.OmegaTextStyle
 import kotlinx.android.synthetic.main.activity_text_examples.*
@@ -26,11 +26,11 @@ class TextExamplesActivity : AppCompatActivity() {
         recyclerview.layoutManager = LinearLayoutManager(this)
 
         adapter.setItems(
-                listOf(
-                        OmegaText.from("Text from String") to OmegaText.from("String Example")
-                                .plus(OmegaTextStyle.from(OmegaFontStyleTextStyle.Style.BOLD)),
-                        OmegaText.from("Text from Resource") to OmegaText.from(R.string.app_name)
-                )
+            listOf(
+                OmegaText.from("Text from String") to OmegaText.from("String Example")
+                    .plus(OmegaTextStyle.from(OmegaFontStyleTextStyle.Style.BOLD)),
+                OmegaText.from("Text from Resource") to OmegaText.from(R.string.app_name)
+            )
         )
     }
 }
@@ -41,11 +41,11 @@ private class Adapter : RecyclerView.Adapter<Adapter.VH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return VH(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_text_example,
-                        parent,
-                        false
-                )
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_text_example,
+                parent,
+                false
+            )
         )
     }
 

@@ -1,8 +1,8 @@
 package com.omega_r.libs.entities.text.resource.text
 
+import com.omega_r.libs.entities.extensions.fromHtmlString
+import com.omega_r.libs.entities.extensions.toHtmlString
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
-import com.omega_r.libs.entities.text.fromHtmlString
-import com.omega_r.libs.entities.text.toHtmlString
 
 actual object OmegaTextResourceTextProcessor : OmegaBaseTextResourceTextProcessor() {
 
