@@ -50,5 +50,8 @@ fun CharSequence.toHtmlString(): String {
         is Spanned -> toHtmlString()
         else -> Html.escapeHtml(this)
     }
-
 }
+
+val Int.text: OmegaText
+    get() = OmegaText.from(this)
+

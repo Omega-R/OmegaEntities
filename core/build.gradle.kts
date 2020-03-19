@@ -93,7 +93,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib")
                 implementation("io.ktor:ktor-client-android:$ktor_version")
-                compileOnly("org.robolectric:android-all:9-robolectric-4913185-2")
+                compileOnly("org.robolectric:android-all:10-robolectric-5803371")
             }
         }
 
@@ -101,6 +101,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5")
                 implementation("com.android.support.test:runner:1.0.2")
             }
         }

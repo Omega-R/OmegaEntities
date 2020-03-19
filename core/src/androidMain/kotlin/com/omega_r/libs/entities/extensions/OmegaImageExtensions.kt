@@ -2,6 +2,8 @@ package com.omega_r.libs.entities.extensions
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
 import android.view.View
@@ -13,6 +15,7 @@ import com.omega_r.libs.entities.images.OmegaImageProcessor
 import com.omega_r.libs.entities.images.OmegaImageProcessorsHolder
 import com.omega_r.libs.entities.images.from
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import java.io.File
 
 val OmegaImage.Companion.NO_PLACEHOLDER_RES: Int
     get() = 0
@@ -26,50 +29,55 @@ fun OmegaImage.Format.toCompressFormat(): Bitmap.CompressFormat {
 }
 
 fun ImageView.setImage(
-        image: OmegaImage?,
-        placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
-        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
-        extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
+    image: OmegaImage?,
+    placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
+    holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
+    extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
 ) {
     val finalImage = image.formatImage(placeholderResId)
     if (finalImage == null) {
         setImageDrawable(null)
     } else {
         holder.getProcessor(finalImage)
-                .applyImage(finalImage, this, holder, extractor)
+            .applyImage(finalImage, this, holder, extractor)
     }
 }
 
 @JvmOverloads
 fun OmegaImage.preload(
-        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
-        extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
+    holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
+    extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
 ) {
     holder.getProcessor(this).preload(this, extractor)
 }
 
 @JvmOverloads
 fun View.setBackground(
-        image: OmegaImage?,
-        placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
-        holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
-        extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
+    image: OmegaImage?,
+    placeholderResId: Int = OmegaImage.NO_PLACEHOLDER_RES,
+    holder: OmegaImageProcessorsHolder = OmegaImageProcessorsHolder.current,
+    extractor: OmegaResourceExtractor = OmegaResourceExtractor.Default
 ) {
     val finalImage = image.formatImage(placeholderResId)
     if (finalImage == null) {
         background = null
     } else {
         holder.getProcessor(finalImage)
-                .applyBackground(finalImage, this, holder, extractor)
+            .applyBackground(finalImage, this, holder, extractor)
     }
 }
 
 private fun OmegaImage?.formatImage(placeholderResId: Int): OmegaImage? {
     val image = this
     return if (image == null) {
-        if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) null else OmegaImage.from(placeholderResId)
+        if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) null else OmegaImage.from(
+            placeholderResId
+        )
     } else {
-        if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) image else OmegaImage.from(placeholderResId, image)
+        if (placeholderResId == OmegaImage.NO_PLACEHOLDER_RES) image else OmegaImage.from(
+            placeholderResId,
+            image
+        )
     }
 }
 
@@ -99,7 +107,8 @@ private fun TextView.getImage(index: Int): OmegaImage? {
 @SuppressLint("ObsoleteSdkInt")
 private fun TextView.setImage(index: Int, image: OmegaImage?) {
     if (image == null) {
-        val drawables = if (SDK_INT >= JELLY_BEAN_MR1) compoundDrawablesRelative else compoundDrawables
+        val drawables =
+            if (SDK_INT >= JELLY_BEAN_MR1) compoundDrawablesRelative else compoundDrawables
         drawables[index] = null
         OmegaImageProcessor.applyCompoundDrawables(this, drawables)
     } else {
@@ -107,3 +116,24 @@ private fun TextView.setImage(index: Int, image: OmegaImage?) {
         holder.getProcessor(image).applyCompoundImage(image, index, this, holder, this.extractor)
     }
 }
+
+val Int.image
+    get() = OmegaImage.from(this)
+
+val Drawable.image
+    get() = OmegaImage.from(this)
+
+val Bitmap.image
+    get() = OmegaImage.from(this)
+
+val String.image
+    get() = OmegaImage.from(this)
+
+val Uri.image
+    get() = OmegaImage.from(this)
+
+val File.image
+    get() = OmegaImage.from(this)
+
+val ByteArray.image
+    get() = OmegaImage.from(this)
