@@ -1,0 +1,29 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.jetbrains.kotlin.mpp_app_android"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+8-->/Workspace/NativeOmegaEntities/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->/Workspace/NativeOmegaEntities/app/src/main/AndroidManifest.xml
+10
+11    <application
+11-->/Workspace/NativeOmegaEntities/app/src/main/AndroidManifest.xml:4:5-12:19
+12        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+12-->[androidx.core:core:1.1.0] /Users/R12/.gradle/caches/transforms-2/files-2.1/1cd7eff88f5e86d0249af2958bf465f0/core-1.1.0/AndroidManifest.xml:24:18-86
+13        android:debuggable="true" >
+14        <provider
+15            android:name="com.omega_r.libs.entities.resources.OmegaResourceExtractor$ResourceExtractorContentProvider"
+15-->/Workspace/NativeOmegaEntities/app/src/main/AndroidManifest.xml:7:17-98
+16            android:authorities="org.jetbrains.kotlin.mpp_app_android.ResourceExtractorContentProvider"
+16-->/Workspace/NativeOmegaEntities/app/src/main/AndroidManifest.xml:8:17-88
+17            android:exported="false"
+17-->/Workspace/NativeOmegaEntities/app/src/main/AndroidManifest.xml:9:17-41
+18            android:grantUriPermissions="true" />
+18-->/Workspace/NativeOmegaEntities/app/src/main/AndroidManifest.xml:10:17-51
+19    </application>
+20
+21</manifest>
