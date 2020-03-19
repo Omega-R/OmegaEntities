@@ -1,3 +1,4 @@
-rootProject.name = 'OmegaEntities'
+rootProject.name = 'NativeOmegaEntities2'
 
-include ':app'
+
+enableFeaturePreview('GRADLE_METADATA')

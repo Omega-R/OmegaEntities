@@ -1,4 +1,0 @@
-#Thu Mar 19 13:52:06 MSK 2020
-base.0=/Workspace/OmegaEntities/app/build/intermediates/dex/debug/out/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
