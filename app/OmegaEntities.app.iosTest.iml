@@ -5,11 +5,12 @@
       <configuration version="3" platform="Native " allPlatforms="Native []" useProjectSettings="false" isTestModule="true" externalProjectId=":app">
         <dependsOnModuleNames>:app:commonTest</dependsOnModuleNames>
         <sourceSets>
-          <sourceSet>OmegaEntities.app.commonTest</sourceSet>
-          <sourceSet>OmegaEntities.app.commonMain</sourceSet>
           <sourceSet>OmegaEntities.app.iosMain</sourceSet>
+          <sourceSet>OmegaEntities.app.commonMain</sourceSet>
+          <sourceSet>OmegaEntities.app.commonTest</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
+        <externalSystemTestTasks>iosTest|:app:iosTest|ios</externalSystemTestTasks>
         <compilerSettings />
         <compilerArguments>
           <option name="languageVersion" value="1.3" />
