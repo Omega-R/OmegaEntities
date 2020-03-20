@@ -22,6 +22,7 @@ class OmegaFileTests {
         runBlocking {
             assert(file.isExist() ?: false)
             assert(file.getOutput() == null)
+            assert(file.getInput() != null)
         }
     }
 
