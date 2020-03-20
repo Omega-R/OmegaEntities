@@ -101,8 +101,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5")
-                implementation("com.android.support.test:runner:1.0.2")
             }
         }
 
