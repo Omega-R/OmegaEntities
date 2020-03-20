@@ -81,7 +81,6 @@ private fun OmegaImage?.formatImage(placeholderResId: Int): OmegaImage? {
     }
 }
 
-
 var TextView.imageStart: OmegaImage?
     get() = getImage(0)
     set(value) = setImage(0, value)
