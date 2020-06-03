@@ -25,6 +25,10 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 gradle.projectsEvaluated {
@@ -34,18 +38,22 @@ gradle.projectsEvaluated {
 publishing {
     publications {
         prebuilt(MavenPublication) {
-            artifact file("$buildDir/outputs/aar/picasso-release.aar")
+            artifact file("$buildDir/outputs/aar/coil-release.aar")
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api project(":core")
-    api('com.squareup.picasso:picasso:2.71828') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+    api("io.coil-kt:coil:0.9.5")
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-android:$ktor_version"
+}
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    google()
 }

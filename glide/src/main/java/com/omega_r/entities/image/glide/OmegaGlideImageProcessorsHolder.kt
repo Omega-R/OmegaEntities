@@ -92,27 +92,27 @@ class OmegaGlideImageProcessorsHolder(
         }
 
         override fun applyImage(
-                entity: OmegaImage,
+                image: OmegaImage,
                 imageView: ImageView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
             Glide.with(imageView)
                     .asDrawable()
-                    .createRequestBuilder(entity, extractor)
+                    .createRequestBuilder(image, extractor)
                     ?.into(imageView)
-                    ?: defaultHolder.getProcessor(entity).applyImage(entity, imageView, holder, extractor)
+                    ?: defaultHolder.getProcessor(image).applyImage(image, imageView, holder, extractor)
         }
 
         override fun applyBackground(
-                entity: OmegaImage,
+                image: OmegaImage,
                 view: View,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
             Glide.with(view)
                     .asDrawable()
-                    .createRequestBuilder(entity, extractor)
+                    .createRequestBuilder(image, extractor)
                     ?.into(object : CustomViewTarget<View, Drawable>(view) {
 
                         override fun onLoadFailed(errorDrawable: Drawable?) {
@@ -127,11 +127,11 @@ class OmegaGlideImageProcessorsHolder(
                             OmegaImageProcessor.applyBackground(view, resource)
                         }
 
-                    }) ?: defaultHolder.getProcessor(entity).applyBackground(entity, view, holder, extractor)
+                    }) ?: defaultHolder.getProcessor(image).applyBackground(image, view, holder, extractor)
         }
 
         override fun applyCompoundImage(
-                entity: OmegaImage,
+                image: OmegaImage,
                 index: Int,
                 textView: TextView,
                 holder: OmegaImageProcessorsHolder,
@@ -140,7 +140,7 @@ class OmegaGlideImageProcessorsHolder(
             extractor.context?.let { context ->
                 Glide.with(context)
                         .asDrawable()
-                        .createRequestBuilder(entity, extractor)
+                        .createRequestBuilder(image, extractor)
                         ?.run {
                             val futureTarget = submit()
                             try {
@@ -150,12 +150,12 @@ class OmegaGlideImageProcessorsHolder(
                                 Glide.with(context)
                                         .clear(futureTarget)
                             }
-                        } ?: defaultHolder.getProcessor(entity).applyCompoundImage(entity, index, textView, holder, extractor)
-            }  ?: defaultHolder.getProcessor(entity).applyCompoundImage(entity, index, textView, holder, extractor)
+                        } ?: defaultHolder.getProcessor(image).applyCompoundImage(image, index, textView, holder, extractor)
+            }  ?: defaultHolder.getProcessor(image).applyCompoundImage(image, index, textView, holder, extractor)
         }
 
         override suspend fun getInput(
-                entity: OmegaImage,
+                image: OmegaImage,
                 extractor: OmegaResourceExtractor,
                 format: OmegaImage.Format,
                 quality: Int
@@ -163,7 +163,7 @@ class OmegaGlideImageProcessorsHolder(
             return extractor.context?.let { context ->
                 Glide.with(context)
                         .asBitmap()
-                        .createRequestBuilder(entity, extractor)
+                        .createRequestBuilder(image, extractor)
                         ?.run {
                             val futureTarget = submit()
                             try {
@@ -174,20 +174,20 @@ class OmegaGlideImageProcessorsHolder(
                                         .clear(futureTarget)
                             }
                         }
-            } ?: defaultHolder.getProcessor(entity).getInput(entity, extractor, format, quality)
+            } ?: defaultHolder.getProcessor(image).getInput(image, extractor, format, quality)
         }
 
         override fun preload(
-                entity: OmegaImage,
+                image: OmegaImage,
                 extractor: OmegaResourceExtractor
         ) {
             extractor.context?.let {
                 Glide.with(it)
                         .asDrawable()
-                        .createRequestBuilder(entity, extractor)
+                        .createRequestBuilder(image, extractor)
                         ?.preload()
-                        ?: defaultHolder.getProcessor(entity).preload(entity, extractor)
-            } ?: defaultHolder.getProcessor(entity).preload(entity, extractor)
+                        ?: defaultHolder.getProcessor(image).preload(image, extractor)
+            } ?: defaultHolder.getProcessor(image).preload(image, extractor)
         }
 
     }

@@ -1,4 +1,4 @@
-package com.omega_r.libs.entities.text
+package com.omega_r.libs.entities.extensions
 
 import android.annotation.StringRes
 import android.content.Context
@@ -9,6 +9,15 @@ import android.view.View
 import android.widget.TextView
 import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import com.omega_r.libs.entities.text.OmegaText
+
+fun OmegaText.Companion.from(@StringRes id: Int): OmegaText = from(OmegaResource.Text(id))
+
+fun OmegaText.Companion.from(@StringRes id: Int, vararg formatArgs: Any): OmegaText =
+    from(OmegaResource.Text(id), *formatArgs)
+
+fun OmegaText.Companion.from(@StringRes id: Int, quantity: Int, vararg formatArgs: Any): OmegaText =
+    from(OmegaResource.Plurals(id), quantity, *formatArgs)
 
 fun TextView.setText(text: OmegaText) {
     this@setText.text = text.getCharSequence(extractor)
@@ -19,8 +28,6 @@ val Context.extractor: OmegaResourceExtractor
 
 val View.extractor: OmegaResourceExtractor
     get() = context.extractor
-
-fun OmegaText.Companion.from(@StringRes id: Int): OmegaText = from(OmegaResource.Text(id))
 
 fun Spanned.toHtmlString(): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -43,5 +50,8 @@ fun CharSequence.toHtmlString(): String {
         is Spanned -> toHtmlString()
         else -> Html.escapeHtml(this)
     }
-
 }
+
+val Int.text: OmegaText
+    get() = OmegaText.from(this)
+

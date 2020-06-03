@@ -26,5 +26,6 @@ include("examples:android")
 include("examples")
 include("glide")
 include("picasso")
+include("coil")
 
 enableFeaturePreview("GRADLE_METADATA")

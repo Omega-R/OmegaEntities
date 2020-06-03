@@ -21,13 +21,11 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("com.android.tools.build:gradle:$android_tools_version")
-        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
-    id("com.github.dcendents.android-maven")
     id("maven-publish")
 }
 
@@ -95,7 +93,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib")
                 implementation("io.ktor:ktor-client-android:$ktor_version")
-                compileOnly("org.robolectric:android-all:9-robolectric-4913185-2")
+                compileOnly("org.robolectric:android-all:10-robolectric-5803371")
             }
         }
 
@@ -103,7 +101,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
-                implementation("com.android.support.test:runner:1.0.2")
             }
         }
 

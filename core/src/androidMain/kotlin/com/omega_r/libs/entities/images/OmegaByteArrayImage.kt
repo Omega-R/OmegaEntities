@@ -34,11 +34,11 @@ data class OmegaByteArrayImage(val byteArray: ByteArray) : BaseBitmapImage(), Om
     class Processor : BaseBitmapImage.Processor<OmegaByteArrayImage>(true) {
 
         override suspend fun getInput(
-                entity: OmegaByteArrayImage,
+                image: OmegaByteArrayImage,
                 extractor: OmegaResourceExtractor,
                 format: OmegaImage.Format,
                 quality: Int
-        ): Input? = entity.byteArray.asInput()
+        ): Input? = image.byteArray.asInput()
 
         override suspend fun getInputStream(
                 entity: OmegaByteArrayImage,

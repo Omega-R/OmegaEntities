@@ -19,12 +19,12 @@ data class OmegaUriImage(val uri: Uri) : BaseBitmapImage(), OmegaImage {
     class Processor : BaseBitmapImage.Processor<OmegaUriImage>(true) {
 
         override fun applyImage(
-                entity: OmegaUriImage,
+                image: OmegaUriImage,
                 imageView: ImageView,
                 holder: OmegaImageProcessorsHolder,
                 extractor: OmegaResourceExtractor
         ) {
-            imageView.setImageURI(entity.uri)
+            imageView.setImageURI(image.uri)
         }
 
         override suspend fun getBitmap(

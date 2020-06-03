@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 
 group = 'com.github.Omega-R'
 
@@ -13,8 +13,6 @@ android {
     defaultConfig {
         minSdkVersion project.min_sdk_version.toInteger()
         targetSdkVersion project.target_sdk_version.toInteger()
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -29,6 +27,18 @@ android {
 
 }
 
+gradle.projectsEvaluated {
+    publishPrebuiltPublicationToMavenLocal.dependsOn(tasks.getByName("assemble"))
+}
+
+publishing {
+    publications {
+        prebuilt(MavenPublication) {
+            artifact file("$buildDir/outputs/aar/glide-release.aar")
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -40,5 +50,8 @@ dependencies {
     implementation "io.ktor:ktor-client-android:$ktor_version"
 }
 repositories {
+    mavenLocal()
     mavenCentral()
+    jcenter()
+    google()
 }
