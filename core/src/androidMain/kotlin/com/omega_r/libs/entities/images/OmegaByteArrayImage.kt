@@ -16,6 +16,13 @@ data class OmegaByteArrayImage(val byteArray: ByteArray) : BaseBitmapImage(), Om
         }
     }
 
+    override suspend fun getInput(
+        holder: OmegaImageProcessorsHolder,
+        extractor: OmegaResourceExtractor,
+        format: OmegaImage.Format,
+        quality: Int
+    ): Input? = holder.getProcessor(this).getInput(this, extractor, format, quality)
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

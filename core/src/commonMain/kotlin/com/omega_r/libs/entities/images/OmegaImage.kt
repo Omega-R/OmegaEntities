@@ -18,7 +18,7 @@ interface OmegaImage : OmegaEntity {
             extractor: OmegaResourceExtractor,
             format: Format = Format.JPEG,
             quality: Int = 100
-    ): Input? = holder.getProcessor(this).getInput(this, extractor, format, quality)
+    ): Input?// = holder.getProcessor(this).getInput(this, extractor, format, quality)
 
     enum class Format {
 

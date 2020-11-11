@@ -31,9 +31,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk12.4.10"
     api project(":core")
-    api ("com.github.bumptech.glide:glide:4.9.0") {
+    api ('com.github.bumptech.glide:glide:4.11.0') {
         exclude group: "com.android.support"
     }
     implementation "io.ktor:ktor-client-core:$ktor_version"

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.widget.ImageView
 import com.omega_r.libs.entities.decoders.toBitmap
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import io.ktor.utils.io.core.*
 import java.io.InputStream
 
 data class OmegaUriImage(val uri: Uri) : BaseBitmapImage(), OmegaImage {
@@ -50,6 +51,13 @@ data class OmegaUriImage(val uri: Uri) : BaseBitmapImage(), OmegaImage {
         ): InputStream? = extractor.contentResolver?.openInputStream(entity.uri)
 
     }
+
+    override suspend fun getInput(
+        holder: OmegaImageProcessorsHolder,
+        extractor: OmegaResourceExtractor,
+        format: OmegaImage.Format,
+        quality: Int
+    ): Input? = holder.getProcessor(this).getInput(this, extractor, format, quality)
 
 }
 

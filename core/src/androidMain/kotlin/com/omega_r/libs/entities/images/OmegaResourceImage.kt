@@ -9,6 +9,7 @@ import com.omega_r.libs.entities.extensions.toBitmapAndRecycle
 import com.omega_r.libs.entities.extensions.toInputStream
 import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import io.ktor.utils.io.core.*
 import java.io.InputStream
 
 actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) : OmegaImage {
@@ -77,6 +78,13 @@ actual data class OmegaResourceImage(actual val resource: OmegaResource.Image) :
         }
 
     }
+
+    override suspend fun getInput(
+        holder: OmegaImageProcessorsHolder,
+        extractor: OmegaResourceExtractor,
+        format: OmegaImage.Format,
+        quality: Int
+    ): Input? = holder.getProcessor(this).getInput(this, extractor, format, quality)
 
 }
 

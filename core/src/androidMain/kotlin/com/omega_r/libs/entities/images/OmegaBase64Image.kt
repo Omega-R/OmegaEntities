@@ -5,6 +5,7 @@ import android.util.Base64
 import com.omega_r.libs.entities.decoders.toBitmap
 import com.omega_r.libs.entities.processors.OmegaProcessor
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import io.ktor.utils.io.core.*
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 
@@ -42,6 +43,13 @@ actual class OmegaBase64Image(actual val base64String: String, val flags: Int) :
         }
 
     }
+
+    override suspend fun getInput(
+        holder: OmegaImageProcessorsHolder,
+        extractor: OmegaResourceExtractor,
+        format: OmegaImage.Format,
+        quality: Int
+    ): Input? = holder.getProcessor(this).getInput(this, extractor, format, quality)
 
 }
 

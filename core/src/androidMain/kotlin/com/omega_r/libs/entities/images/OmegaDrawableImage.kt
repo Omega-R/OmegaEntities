@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.omega_r.libs.entities.extensions.toBitmapAndRecycle
 import com.omega_r.libs.entities.extensions.toInputStream
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
+import io.ktor.utils.io.core.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
@@ -57,6 +58,13 @@ data class OmegaDrawableImage(val drawable: Drawable) : BaseBitmapImage(), Omega
         }
 
     }
+
+    override suspend fun getInput(
+        holder: OmegaImageProcessorsHolder,
+        extractor: OmegaResourceExtractor,
+        format: OmegaImage.Format,
+        quality: Int
+    ): Input? = holder.getProcessor(this).getInput(this, extractor, format, quality)
 
 }
 

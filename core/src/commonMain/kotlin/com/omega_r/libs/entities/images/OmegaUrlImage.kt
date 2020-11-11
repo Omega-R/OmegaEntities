@@ -24,4 +24,11 @@ data class OmegaUrlImage(val url: String) : OmegaImage {
 
     }
 
+    override suspend fun getInput(
+        holder: OmegaImageProcessorsHolder,
+        extractor: OmegaResourceExtractor,
+        format: OmegaImage.Format,
+        quality: Int
+    ): Input? = holder.getProcessor(this).getInput(this, extractor, format, quality)
+
 }
