@@ -1,9 +1,7 @@
-
 allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
         google()
     }
 }
@@ -14,18 +12,12 @@ buildscript {
 
     repositories {
         mavenLocal()
-        jcenter()
         google()
-        maven(url = "https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
-        maven(url = "https://maven.google.com")
-        maven(url = "https://plugins.gradle.org/m2/")
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
-        maven(url = "https://kotlin.bintray.com/kotlinx")
+        mavenCentral()
     }
 
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("com.android.tools.build:gradle:$android_tools_version")
-        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }

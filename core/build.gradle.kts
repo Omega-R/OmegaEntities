@@ -8,26 +8,19 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
         google()
-        maven(url = "https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
         maven(url = "https://jitpack.io")
         maven(url = "https://maven.google.com")
-        maven(url = "https://plugins.gradle.org/m2/")
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
-        maven(url = "https://kotlin.bintray.com/kotlinx")
     }
 
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("com.android.tools.build:gradle:$android_tools_version")
-        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
-    id("com.github.dcendents.android-maven")
     id("maven-publish")
 }
 
@@ -41,11 +34,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     google()
-    jcenter()
     maven(url = "https://jitpack.io")
-    maven(url = "https://kotlin.bintray.com/kotlinx")
-    maven(url = "https://dl.bintray.com/kotlin/kotlin-dev")
-    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
 }
 
 configurations.create("compileClasspath")
@@ -56,7 +45,7 @@ kotlin {
     jvm("android") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "11"
             }
         }
     }

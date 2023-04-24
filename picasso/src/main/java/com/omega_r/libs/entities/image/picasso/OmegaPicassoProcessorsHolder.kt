@@ -75,11 +75,11 @@ class OmegaPicassoProcessorsHolder(
         override fun applyImage(entity: OmegaImage, imageView: ImageView, holder: OmegaImageProcessorsHolder, extractor: OmegaResourceExtractor) {
             createRequestCreator(entity)?.apply {
                 fit()
-                @Suppress("NON_EXHAUSTIVE_WHEN")
                 when (imageView.scaleType) {
                     ImageView.ScaleType.FIT_CENTER,
                     ImageView.ScaleType.CENTER_INSIDE -> centerInside()
                     ImageView.ScaleType.CENTER_CROP -> centerCrop()
+                    else -> { }
                 }
                 into(imageView)
             } ?: defaultHolder.getProcessor(entity).applyImage(entity, imageView, holder, extractor)

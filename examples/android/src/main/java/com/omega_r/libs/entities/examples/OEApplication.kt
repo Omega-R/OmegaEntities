@@ -1,8 +1,8 @@
 package com.omega_r.libs.entities.examples
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 
-class OEApplication : Application() {
+class OEApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

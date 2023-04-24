@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.Omega-R'
 
 android {
     compileSdkVersion project.compile_sdk_version.toInteger()
     buildToolsVersion project.build_tools_version
+
+    namespace "com.omega_r.libs.entities.image.picasso"
 
 
     defaultConfig {
