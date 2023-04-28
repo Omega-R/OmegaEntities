@@ -1,11 +1,13 @@
 package com.omega_r.libs.entities.images
 
+import com.omega_r.libs.entities.extensions.asInput
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import io.ktor.utils.io.core.Input
 import kotlinx.coroutines.Dispatchers
+import platform.Foundation.NSInputStream
 import kotlin.coroutines.CoroutineContext
 
-class OmegaBaseImageProcessor<I: OmegaImage>: OmegaImageProcessor<I> {
+abstract class OmegaBaseImageProcessor<I: OmegaImage>: OmegaImageProcessor<I> {
 
     override val coroutineContext: CoroutineContext = Dispatchers.Default
 
@@ -17,7 +19,7 @@ class OmegaBaseImageProcessor<I: OmegaImage>: OmegaImageProcessor<I> {
         extractor: OmegaResourceExtractor,
         format: OmegaImage.Format,
         quality: Int
-    ): InputStream?
+    ): NSInputStream?
 
     override fun preload(entity: I, extractor: OmegaResourceExtractor) {
         // nothing
