@@ -23,7 +23,7 @@ actual class OmegaUrlFile(
 
     override val mimeType: String = mimeType ?: url.getMimeType()
 
-    // not sure it works
+    // not sure whether it will work
     override val name: String = name ?: (NSURL(fileURLWithPath = url) as NSString).lastPathComponent
 
 }
