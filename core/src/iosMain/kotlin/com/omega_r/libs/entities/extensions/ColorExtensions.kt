@@ -26,7 +26,7 @@ fun UIColor.toRgbInt(): Int? {
             val blueInt = (blue.getPointer(this).pointed.value * 255.0f).toInt()
             val alphaInt = (alpha.getPointer(this).pointed.value * 255.0f).toInt()
 
-            alphaInt.shl(24) + redInt.shl(16) + greenInt.shl(8) + blueInt
+            alphaInt shl 24 + redInt shl 16 + greenInt shl 8 + blueInt
 
         } else null
     }
@@ -39,8 +39,8 @@ fun Int.toUIColor(): UIColor {
         val blue = cValue<CGFloatVar>()
         val alpha = cValue<CGFloatVar>()
 
-        red.getPointer(this).pointed.value = (this@toUIColor and 0xFF0000).shr(16).toDouble()
-        green.getPointer(this).pointed.value = (this@toUIColor and 0x00FF00).shr(8).toDouble()
+        red.getPointer(this).pointed.value = ((this@toUIColor and 0xFF0000) shr 16).toDouble()
+        green.getPointer(this).pointed.value = ((this@toUIColor and 0x00FF00) shr 8).toDouble()
         blue.getPointer(this).pointed.value = (this@toUIColor and 0x0000FF).toDouble()
         alpha.getPointer(this).pointed.value = 1.0
 
