@@ -1,21 +1,19 @@
 package com.omega_r.libs.entities.text.resource.plurals
 
-import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
-import com.omega_r.libs.entities.text.resource.OmegaResourceTextProcessor
+import com.omega_r.libs.entities.text.NSSpannableString
 
-actual object OmegaPluralsResourceTextProcessor : OmegaResourceTextProcessor<OmegaPluralsResourceText, OmegaResource.Plurals>() {
-
-    override fun extract(entity: OmegaPluralsResourceText, resourceExtractor: OmegaResourceExtractor): CharSequence? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+actual object OmegaPluralsResourceTextProcessor : OmegaBaseTextResourceTextProcessor() {
 
     override fun extractWithArgs(
         entity: OmegaPluralsResourceText,
         formatArgs: Array<out Any>,
         resourceExtractor: OmegaResourceExtractor
     ): CharSequence? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        val sourceString = resourceExtractor.getPluralsChatSequence(entity.resource, entity.quantity) ?: return null
+        return NSSpannableString.createFormattedString(sourceString, formatArgs[0]).string
+
     }
 
 }

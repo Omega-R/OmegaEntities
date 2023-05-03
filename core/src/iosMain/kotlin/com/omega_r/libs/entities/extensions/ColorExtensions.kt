@@ -30,5 +30,25 @@ fun UIColor.toRgbInt(): Int? {
 
         } else null
     }
+}
 
+fun Int.toUIColor(): UIColor {
+    memScoped {
+        val red = cValue<CGFloatVar>()
+        val green = cValue<CGFloatVar>()
+        val blue = cValue<CGFloatVar>()
+        val alpha = cValue<CGFloatVar>()
+
+        red.getPointer(this).pointed.value = (this@toUIColor and 0xFF0000).shr(16).toDouble()
+        green.getPointer(this).pointed.value = (this@toUIColor and 0x00FF00).shr(8).toDouble()
+        blue.getPointer(this).pointed.value = (this@toUIColor and 0x0000FF).toDouble()
+        alpha.getPointer(this).pointed.value = 1.0
+
+        return UIColor(
+            red = red.getPointer(this).pointed.value / 0xFF.toDouble(),
+            green = green.getPointer(this).pointed.value / 0xFF.toDouble(),
+            blue = blue.getPointer(this).pointed.value / 0xFF.toDouble(),
+            alpha = alpha.getPointer(this).pointed.value
+        )
+    }
 }

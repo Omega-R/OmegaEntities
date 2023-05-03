@@ -8,11 +8,11 @@ import com.omega_r.libs.entities.text.styled.styles.*
 
 actual object OmegaDefaultStyledTextProcessor : OmegaStyledTextProcessor {
 
-    actual override fun extract(entity: OmegaStyledText, resourceExtractor: OmegaResourceExtractor): CharSequence? =
-        entity.sourceText.getCharSequence(resourceExtractor)
+    actual override fun extract(entity: OmegaStyledText, extractor: OmegaResourceExtractor): CharSequence? =
+        entity.sourceText.getCharSequence(extractor)
             ?.applyStyle(
                 styles = entity.styles,
-                extractor = resourceExtractor
+                extractor = extractor
             )
 
 

@@ -10,6 +10,8 @@ class NSSpannableString : NSAttributedString(NSCoder()), CharSequence {
         fun create(text: CharSequence = ""): NSSpannableString {
             return NSAttributedString.create(text as String) as NSSpannableString
         }
+
+        fun createFormattedString(source: CharSequence, args: Any?) = create(source).format(args)
     }
 
     override val length: Int
@@ -21,6 +23,13 @@ class NSSpannableString : NSAttributedString(NSCoder()), CharSequence {
 
     operator fun plus(another: CharSequence): NSSpannableString {
         return create(this.string.plus(another))
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun format(args: Any?): NSSpannableString = try {
+        NSAttributedString.create(string = this.string, attributes = args as Map<Any?, *>) as NSSpannableString
+    } catch (e: ClassCastException) {
+        this
     }
 
 }

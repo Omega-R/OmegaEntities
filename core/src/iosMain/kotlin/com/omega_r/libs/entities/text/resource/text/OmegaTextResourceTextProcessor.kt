@@ -1,20 +1,19 @@
 package com.omega_r.libs.entities.text.resource.text
 
-import com.omega_r.libs.entities.resources.OmegaResource
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
-import com.omega_r.libs.entities.text.resource.OmegaResourceTextProcessor
+import com.omega_r.libs.entities.text.NSSpannableString
 
-actual object OmegaTextResourceTextProcessor :
-    OmegaResourceTextProcessor<OmegaTextResourceText, OmegaResource.Text>() {
-    override fun extract(entity: OmegaTextResourceText, resourceExtractor: OmegaResourceExtractor): CharSequence? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+actual object OmegaTextResourceTextProcessor : OmegaBaseTextResourceTextProcessor() {
 
     override fun extractWithArgs(
         entity: OmegaTextResourceText,
         formatArgs: Array<out Any>,
         resourceExtractor: OmegaResourceExtractor
     ): CharSequence? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        val sourceString = resourceExtractor.getCharSequence(entity.resource) ?: return null
+        return NSSpannableString.createFormattedString(sourceString, formatArgs[0]).string
+
     }
+
 }
