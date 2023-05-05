@@ -12,7 +12,7 @@ actual object OmegaPluralsResourceTextProcessor : OmegaBaseTextResourceTextProce
     ): CharSequence? {
 
         val sourceString = resourceExtractor.getPluralsChatSequence(entity.resource, entity.quantity) ?: return null
-        return NSSpannableString.createFormattedString(sourceString, formatArgs[0]).string
+        return NSSpannableString.createAndFormat(sourceString, formatArgs[0]).string
 
     }
 

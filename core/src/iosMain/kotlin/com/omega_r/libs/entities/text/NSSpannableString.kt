@@ -11,7 +11,7 @@ class NSSpannableString : NSAttributedString(NSCoder()), CharSequence {
             return NSAttributedString.create(text as String) as NSSpannableString
         }
 
-        fun createFormattedString(source: CharSequence, args: Any?) = create(source).format(args)
+        fun createAndFormat(source: CharSequence, args: Any?) = create(source).format(args)
     }
 
     override val length: Int

@@ -20,7 +20,6 @@ import platform.UIKit.UIView
 
 actual interface OmegaImageProcessor<T : OmegaImage> : OmegaProcessor<T>, CoroutineScope {
 
-    // if image file name does not contain extensions, load it from systemName
     companion object {
 
         private const val IMAGE_PADDING: Int = 3
@@ -95,7 +94,6 @@ actual interface OmegaImageProcessor<T : OmegaImage> : OmegaProcessor<T>, Corout
                     IconPosition.BOTTOM -> {
                         bottom = iconSize.toDouble() + IMAGE_PADDING
                     }
-
                     IconPosition.RIGHT -> { }
                 }
             }

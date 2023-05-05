@@ -27,7 +27,7 @@ class OmegaUriFile(val uri: String, name: String?, mimeType: String?) : OmegaFil
 
     override val mimeType: String = mimeType ?: uri.getMimeType()
 
-    override val name: String = name ?: (NSURL(fileURLWithPath = uri) as NSString).lastPathComponent
+    override val name: String = name ?: (NSURL(fileURLWithPath = uri)).lastPathComponent ?: ""
 
     class Processor : OmegaFileProcessor<OmegaUriFile> {
 
@@ -46,3 +46,5 @@ class OmegaUriFile(val uri: String, name: String?, mimeType: String?) : OmegaFil
         }
     }
 }
+
+fun OmegaFile.Companion.from(uri: String, name: String? = null, mimeType: String? = null) = OmegaUriFile(uri, name, mimeType)
