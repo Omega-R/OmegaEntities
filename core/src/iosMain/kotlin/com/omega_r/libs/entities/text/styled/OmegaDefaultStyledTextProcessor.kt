@@ -39,7 +39,7 @@ actual object OmegaDefaultStyledTextProcessor : OmegaStyledTextProcessor {
         styles.forEach { style ->
             originalString = originalString.applyStyle(style, extractor)
         }
-        return originalString
+        return originalString.string()
     }
 
     // https://www.hackingwithswift.com/articles/113/nsattributedstring-by-example parsing html string

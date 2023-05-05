@@ -4,7 +4,9 @@ import com.omega_r.libs.entities.extensions.asInput
 import com.omega_r.libs.entities.resources.OmegaResourceExtractor
 import io.ktor.client.HttpClient
 import io.ktor.client.request.request
+import io.ktor.client.statement.*
 import io.ktor.http.Url
+import io.ktor.util.*
 import io.ktor.utils.io.core.Input
 
 data class OmegaUrlImage(val url: String) : OmegaImage {
@@ -18,9 +20,9 @@ data class OmegaUrlImage(val url: String) : OmegaImage {
                 extractor: OmegaResourceExtractor,
                 format: OmegaImage.Format,
                 quality: Int
-        ): Input? = client.request<ByteArray>(Url(entity.url)) {
+        ): Input? = client.request(Url(entity.url)) {
             /* nothing */
-        }.asInput()
+        }.readBytes().asInput()
 
     }
 

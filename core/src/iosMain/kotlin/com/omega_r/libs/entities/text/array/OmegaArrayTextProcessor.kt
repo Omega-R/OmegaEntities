@@ -13,7 +13,7 @@ actual object OmegaArrayTextProcessor : OmegaTextProcessor<OmegaArrayText> {
                 spannableString += charSequence
             }
         }
-        return spannableString
+        return spannableString.string()
     }
 
 }

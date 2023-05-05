@@ -4,7 +4,7 @@ import platform.Foundation.NSAttributedString
 import platform.Foundation.NSCoder
 import platform.Foundation.create
 
-class NSSpannableString : NSAttributedString(NSCoder()), CharSequence {
+class NSSpannableString : NSAttributedString() {
 
     companion object {
         fun create(text: CharSequence = ""): NSSpannableString {
@@ -14,12 +14,7 @@ class NSSpannableString : NSAttributedString(NSCoder()), CharSequence {
         fun createAndFormat(source: CharSequence, args: Any?) = create(source).format(args)
     }
 
-    override val length: Int
-        get() = string().length
-
-    override operator fun get(index: Int): Char = string()[index]
-
-    override fun subSequence(startIndex: Int, endIndex: Int): CharSequence = string().subSequence(startIndex, endIndex)
+    operator fun get(index: Int): Char = string()[index]
 
     operator fun plus(another: CharSequence): NSSpannableString {
         return create(this.string.plus(another))
