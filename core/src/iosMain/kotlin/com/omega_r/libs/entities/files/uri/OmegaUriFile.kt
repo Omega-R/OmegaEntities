@@ -15,7 +15,7 @@ import platform.Foundation.NSString
 import platform.Foundation.NSURL
 import platform.Foundation.lastPathComponent
 
-class OmegaUriFile(val uri: String, name: String?, mimeType: String?) : OmegaFile {
+class OmegaUriFile(val uri: String, name: String? = null, mimeType: String? = null) : OmegaFile {
 
     companion object {
         init {

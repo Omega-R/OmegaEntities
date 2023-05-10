@@ -31,30 +31,10 @@ import platform.Foundation.pathExtension
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageJPEGRepresentation
 import platform.UIKit.UIImagePNGRepresentation
+import platform.UniformTypeIdentifiers.UTType
 import platform.darwin.NSUIntegerVar
 import platform.posix.id_t
 import platform.posix.uint8_tVar
-
-fun String.getMimeType(): String {
-
-    val cfStringRef: CFStringRef = CFBridgingRetain(
-        NSURL(fileURLWithPath = this).pathExtension ?: ""
-    )!!.reinterpret()
-
-    UTTypeCreatePreferredIdentifierForTag(
-        kUTTagClassFilenameExtension,
-        cfStringRef,
-        null
-    )?.let { uti ->
-        UTTypeCopyPreferredTagWithClass(
-            uti,
-            kUTTagClassMIMEType
-        )?.let {
-            return CFBridgingRelease(it) as String
-        }
-    }
-    return "application/octet-stream"
-}
 
 fun String.toByteReadPacket(): ByteReadPacket? {
     val url = NSURL(fileURLWithPath = this)

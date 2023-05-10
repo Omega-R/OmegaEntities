@@ -11,6 +11,7 @@ import com.omega_r.libs.entities.colors.name.OmegaNameColorProcessor
 import com.omega_r.libs.entities.colors.resource.OmegaResourceColor
 import com.omega_r.libs.entities.colors.resource.OmegaResourceColorProcessor
 import com.omega_r.libs.entities.processors.ProcessorsHolder
+import kotlin.native.concurrent.ThreadLocal
 
 
 interface OmegaColorProcessorsHolder : ProcessorsHolder<OmegaColor, OmegaColorProcessor<OmegaColor>> {

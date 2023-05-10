@@ -16,7 +16,7 @@ fun UIColor.toRgbInt(): Int? = memScoped {
         val greenInt = (green.value * 255.0f).toInt()
         val blueInt = (blue.value * 255.0f).toInt()
         val alphaInt = (alpha.value * 255.0f).toInt()
-        alphaInt shl 24 + redInt shl 16 + greenInt shl 8 + blueInt
+        (alphaInt shl 24) + (redInt shl 16) + (greenInt shl 8) + blueInt
     } else null
 }
 

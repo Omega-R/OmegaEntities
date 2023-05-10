@@ -1,4 +1,10 @@
+import com.omega_r.libs.entities.extensions.toRgbInt
+import com.omega_r.libs.entities.extensions.toUIColor
+import com.omega_r.libs.entities.files.uri.OmegaUriFile
 import com.omega_r.libs.entities.files.url.OmegaUrlFile
+import kotlinx.cinterop.pointed
+import platform.CoreGraphics.CGFloat
+import platform.UIKit.UIColor
 import kotlin.test.Test
 
 class OmegaEntitiesIosTest {
@@ -11,6 +17,12 @@ class OmegaEntitiesIosTest {
         )
         println("${file.type} ${file.name} ${file.mimeType}")
 
+    }
+
+    @Test
+    fun testColor() {
+        val color = UIColor.orangeColor
+        println("TO INT: ${color.toRgbInt()} REVERSE: ${color.toRgbInt()?.toUIColor()?.toRgbInt()}")
     }
 
 }
